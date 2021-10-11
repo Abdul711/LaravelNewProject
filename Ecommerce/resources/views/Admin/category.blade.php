@@ -29,10 +29,10 @@
                                                 <tr>
                                                 <td>{{$key+1}} </td>
                                                 <td>{{$category->categories_name}}</td>
-                                                <td>iPhone X 64Gb Grey</td>
+                                                <td><img src="{{asset('storage/media/category/'.$category->image)}}"></td>
                                                 <td>{{date("d-F-Y",strtotime($category->added_on))}}</td>
                                                 <td><a href="{{url('admin/category/manage/'.$category->id)}}" ><button class="btn btn-primary"><i class="fa fa-edit"></i> Edit </button></a></td>
-                                                <td><a href="{{url('admin/category//'.$category->id)}}" ><button class="btn btn-danger"><i class="fa fa-trash"></i> Delete </button></a></td>
+                                                <td><a href="{{url('admin/category/delete/'.$category->id)}}" ><button class="btn btn-danger"><i class="fa fa-trash"></i> Delete </button></a></td>
                                                    <td> 
 
 

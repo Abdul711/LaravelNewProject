@@ -15,12 +15,10 @@ class BrandController extends Controller
      */
     public function index()
     {
-     $data=DB::table('brands')->get();
+       $data=DB::table('brands')->get();    
+        $result["brands"]=$data;
   
-       print_r($data);
-
-       die();
-       return view("admin/brand",$data);
+       return view("admin/brand",$result);
     }
 
     /**
@@ -28,9 +26,27 @@ class BrandController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id=null)
     {
-        //
+       
+        if($id>0 && $id!=""){
+            $data=DB::table("brands")->where("id","=",$id)->get();
+         $pageTitle="Update Brand";
+         $fontAwe="edit";
+         $brandName=$data[0]->brands_name;
+     }else{
+         $pageTitle="Add Brand";
+         $fontAwe="trash";
+         $fontAwe="plus";
+         $brandName="";
+
+     }
+ 
+     $result["pageTitle"]=$pageTitle;
+     $result["fontAwe"]=$fontAwe;
+     $result["BrandName"]=$brandName;
+     $result["id"]=$id;
+     return view("admin/manage_brand",$result);
     }
 
     /**
@@ -41,7 +57,51 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       
+          
+             $brandDataArray["brands_name"]=$request->post("brands_name");
+
+            if( $request->post("id")!="" && $request->post("id") >0  ){
+                $data=DB::table("brands")->where("id","=",$request->post("id"))->get();
+                if($request->hasFile("brandImage")){
+                    $image=$request->file("brandImage");
+                    $ext=$image->extension();
+                    $image_name=time().'.'.$ext;
+                    $path="/public/media/brand";
+                    $image->storeAs($path,$image_name);
+
+                }else{
+               
+                  $image_name=$data[0]->image;
+                }
+               if( $data[0]->status!=""){
+                $brandDataArray["status"]=$data[0]->status;
+               }else{
+                $brandDataArray["status"]=1;
+               }
+                $brandDataArray["image"]=$image_name;
+                DB::table('brands')->where('id','=',$request->post('id'))->update($brandDataArray);
+                return redirect('admin/brand');
+            }else{
+                if($request->hasFile("brandImage")){
+                    $image=$request->file("brandImage");
+                    $ext=$image->extension();
+                    $image_name=time().'.'.$ext;
+                    $path="/public/media/brand";
+                    $image->storeAs($path,$image_name);
+                    $brandDataArray["image"]=$image_name;
+                    $brandDataArray["status"]=1;
+               
+                    $brandDataArray["added_on"]=date("Y-m-d H:i:s");
+                    print_r($brandDataArray);
+                    DB::table('brands')->insert($brandDataArray);
+                    return redirect('admin/brand');
+                }else{
+                    $y=  url()->previous();
+                    return redirect($y);
+                }
+            }
+        
     }
 
     /**
@@ -84,9 +144,11 @@ class BrandController extends Controller
      * @param  \App\Models\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Brand $brand)
+    public function destroy(Brand $brand,$id)
     {
         //
+        DB::table('brands')->where('id',$id)->delete();
+        return redirect('admin/brand');
     }
     public function getData()
     {

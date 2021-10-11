@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Color;
 use Illuminate\Http\Request;
-
+use Http;
+use DB;
 class ColorController extends Controller
 {
     /**
@@ -13,11 +14,12 @@ class ColorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-
-  { 
-     $data= DB::table('colors')->get();
-     $result["colors"]=$data;
-     print_r($result);
+    {
+        $data= DB::table('colors')->get();
+        $result["colors"]=$data;
+        return view("admin/color",$result);
+        die();
+        print_r($result);
     }
 
     /**
@@ -25,9 +27,26 @@ class ColorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id="")
     {
-        //
+       if($id==""){
+        $pageTitle="Add Color";
+    
+        $fontAwesome="plus";
+        $colorName="";
+       }else{
+        $pageTitle="Update Color";
+        $fontAwesome="edit";
+        $data=DB::table("colors")->where('id','=',$id)->get();
+        if(!isset($data[0])){
+            return redirect("admin/color");
+        }
+        $colorName=$data[0]->color_name;
+       }
+       $result["pageTitle"]=  $pageTitle;
+       $result["fontAwesome"]=$fontAwesome;
+       $result["colorName"]=$colorName;
+          return view("admin/manage_color",$result);
     }
 
     /**
@@ -79,4 +98,10 @@ class ColorController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Color  $color
-     * @return \Illuminate\Http\Re
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Color $color)
+    {
+        //
+    }
+}

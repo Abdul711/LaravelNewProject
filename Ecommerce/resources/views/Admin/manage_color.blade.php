@@ -1,9 +1,10 @@
 @extends('admin/layouts')
+@section("pageTitle",$pageTitle)
 @section("container")
 <div class="row">
                             <div class="col-lg-12">
                                 <div class="card">
-                                    <div class="card-header">Manage Category</div>
+                                    <div class="card-header">{{$pageTitle}}</div>
                                     <div class="card-body">
                                    
                                         <form action="" method="post" novalidate="novalidate">
@@ -45,9 +46,9 @@
                                             </div>
                                             <div>
                                                 <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
-                                                    <i class="fa fa-lock fa-lg"></i>&nbsp;
-                                                    <span id="payment-button-amount">Pay $100.00</span>
-                                                    <span id="payment-button-sending" style="display:none;">Sending…</span>
+                                                    <i class="fa fa-{{$fontAwesome}} fa-lg"></i>&nbsp;
+                                                    <span id="payment-button-amount">{{$pageTitle}}</span>
+                                          
                                                 </button>
                                             </div>
                                         </form>

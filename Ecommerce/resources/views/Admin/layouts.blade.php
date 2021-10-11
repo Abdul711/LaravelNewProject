@@ -171,7 +171,9 @@
                                     <li class="@yield('brand_select')">
                                     <a href="{{url('admin/brand')}}">Brand</a>
                                 </li>
-           
+                  <li class="@yield('brand_select')">
+                                    <a href="{{url('admin/color')}}">Color</a>
+                                </li>
            
 </ul>
                 </nav>
@@ -216,7 +218,7 @@
                                                 
                                             </div>
                                             <div class="account-dropdown__footer">
-                                                <a href="#">
+                                                <a href="{{url('admin/logout')}}">
                                                     <i class="zmdi zmdi-power"></i>Logout</a>
                                             </div>
                                         </div>
