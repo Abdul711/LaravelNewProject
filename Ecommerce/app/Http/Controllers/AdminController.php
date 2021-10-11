@@ -24,7 +24,9 @@ class AdminController extends Controller
 
         if(isset($data[0])){
             if(Hash::check($password, $data[0]->password)){
-               
+               $request->session()->put('ADMINID',$data[0]->id );
+               $request->session()->put('ADMIN_LOGIN',true);
+               $request->session()->put('ADMINROLE',$data[0]->role );
                 return redirect('admin/dashboard');
             }
         }else{

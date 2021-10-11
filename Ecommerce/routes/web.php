@@ -63,6 +63,9 @@ Route::get('admin/size/delete/{id}',[SizeController::class,"destroy"]);
 /* Category Crud Operation */
 Route::get('admin/order/manage/{id?}',[OrderController::class,"create"]);
 Route::get('admin/order',[OrderController::class,"index"]);
+Route::get('admin/logout', function () {
+    return redirect('admin');
+});
 Route::get('admin/users/{id}', function ($id) {
     
    });
