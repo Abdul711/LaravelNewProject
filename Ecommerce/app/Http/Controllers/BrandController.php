@@ -121,10 +121,21 @@ class BrandController extends Controller
      * @param  \App\Models\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function edit(Brand $brand)
+    public function update_status($id)
     {
-        //
-    }
+        echo $id;
+      $data=DB::table('brands')->where('id','=',$id);
+ $dataA=$data->get();
+     $currentStatus=$dataA[0]->status;
+     if($currentStatus==0){
+         $newStatus=1;
+     }else{
+         $newStatus=0;
+     }
+           $data->update(["status"=>$newStatus]);
+           $redirectLink=  url()->previous();
+   return       redirect($redirectLink) ;
+           }
 
     /**
      * Update the specified resource in storage.

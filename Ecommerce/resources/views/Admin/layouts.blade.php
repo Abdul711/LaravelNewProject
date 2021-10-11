@@ -171,10 +171,12 @@
                                     <li class="@yield('brand_select')">
                                     <a href="{{url('admin/brand')}}">Brand</a>
                                 </li>
-                  <li class="@yield('brand_select')">
+                  <li class="@yield('color_select')">
                                     <a href="{{url('admin/color')}}">Color</a>
                                 </li>
-           
+              <li class="@yield('size_select')">
+                                    <a href="{{url('admin/size')}}">Size</a>
+                                </li>
 </ul>
                 </nav>
             </div>

@@ -43,6 +43,7 @@ class ColorController extends Controller
         }
         $colorName=$data[0]->color_name;
        }
+       $result["id"]=$id;
        $result["pageTitle"]=  $pageTitle;
        $result["fontAwesome"]=$fontAwesome;
        $result["colorName"]=$colorName;
@@ -57,7 +58,22 @@ class ColorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+     
+        $id=$request->post('id');
+    $tabledata=DB::table("colors");
+    $dataArray["added_on"]=date("Y-m-d H:i:s");
+    $dataArray["color_name"]=$request->post("color_name");
+    if($id!=""){
+        $dataget= $tabledata->get();
+        
+       $dataArray["status"]=$dataget[0]->status;
+       $tabledata->where('id','=',$id)->update($dataArray);
+    }else{
+        $dataArray["status"]=1;
+        $tabledata->insert($dataArray);
+      
+    }
+    return redirect('admin/color');
     }
 
     /**
@@ -89,9 +105,21 @@ class ColorController extends Controller
      * @param  \App\Models\Color  $color
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Color $color)
+    public function update_status($id)
     {
-        //
+
+        $data=DB::table('colors')->where('id','=',$id);
+        $dataA=$data->get();
+            $currentStatus=$dataA[0]->status;
+            if($currentStatus==0){
+                $newStatus=1;
+            }else{
+                $newStatus=0;
+            }
+                  $data->update(["status"=>$newStatus]);
+                  $redirectLink=  url()->previous();
+          return       redirect($redirectLink) ;
+     
     }
 
     /**
@@ -100,8 +128,9 @@ class ColorController extends Controller
      * @param  \App\Models\Color  $color
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Color $color)
+    public function destroy($id)
     {
-        //
+        DB::table('colors')->where('id',$id)->delete();
+        return redirect('admin/color');
     }
 }
