@@ -1,6 +1,6 @@
 @extends('admin/layouts')
 @section("container")
-@section('category_select','active')
+@section('size_select','active')
 @section("pageTitle","Size")
 
 

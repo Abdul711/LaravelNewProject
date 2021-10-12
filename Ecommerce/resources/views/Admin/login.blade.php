@@ -51,11 +51,11 @@
                             <form action="" method="post">
                                 <div class="form-group">
                                     <label>Email Address</label>
-                                    <input class="au-input au-input--full" type="email" name="email" placeholder="Email "  autocomplete="off">
+                                    <input class="au-input au-input--full" type="email" name="email" placeholder="Email " value="" autocomplete="off">
                                 </div>
                                 <div class="form-group">
                                     <label>Password</label>
-                                    <input class="au-input au-input--80" type="password" name="password" placeholder="Password" autocomplete="off">
+                                    <input class="au-input au-input--80" type="password" name="password"  value="" placeholder="Password" autocomplete="off">
                               <span class="show">  <i class="fa fa-eye-slash showd"></i></span>
 
                                 </div>

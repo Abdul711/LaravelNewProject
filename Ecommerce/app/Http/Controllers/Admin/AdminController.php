@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
 
+namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Validator;
 use Illuminate\Support\Facades\DB;
@@ -47,6 +48,9 @@ class AdminController extends Controller
    }
      public function index()
      {
+        if(session()->has("ADMIN_LOGIN")){
+           return redirect("admin/dashboard");
+        }
   return view("admin/login");   
      }
       public function signup()

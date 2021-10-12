@@ -1,5 +1,6 @@
 @extends('admin/layouts')
 @section("pageTitle",$pageTitle)
+@section('size_select','active')
 @section("container")
 <div class="row">
                             <div class="col-lg-12">

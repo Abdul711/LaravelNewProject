@@ -1,12 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\BrandController;
-use App\Http\Controllers\ColorController;
-use App\Http\Controllers\SizeController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\ColorController;
+use App\Http\Controllers\Admin\SizeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,9 +28,9 @@ Route::post('/admin',[AdminController::class,"login"]);
 Route::get('admin/signup',[AdminController::class,"signup"]);
 Route::post('admin/signup',[AdminController::class,"register"]);
 Route::get('admin/forgot',[AdminController::class,"forgot"]);
-Route::get('admin/dashboard',[AdminController::class,"dashboard"]);
 
     Route::group(['middleware'=>'admin_auth'],function(){
+        Route::get('admin/dashboard',[AdminController::class,"dashboard"]);
 
 Route::get('admin/category/manage/{id?}',[CategoryController::class,"create"]);
 Route::get('admin/category/delete/{id}',[CategoryController::class,"destroy"]);
@@ -62,8 +63,18 @@ Route::get('admin/size/status/{id}',[SizeController::class,"update_status"]);
 Route::get('admin/size/delete/{id}',[SizeController::class,"destroy"]);
 /* Category Crud Operation */
 Route::get('admin/order/manage/{id?}',[OrderController::class,"create"]);
+
 Route::get('admin/order',[OrderController::class,"index"]);
+Route::get("admin/coupon",[CouponController::class,"index"]);
+Route::get("admin/coupon/manage/{id?}",[CouponController::class,"manage_coupon"]);
+Route::post("admin/coupon/manageprocess",[CouponController::class,"store"])->name('coupon.store');
 Route::get('admin/logout', function () {
+       if(session()->has("ADMINID")){
+      
+       session()->forget("ADMINROLE");
+       session()->forget("ADMIN_LOGIN");
+       session()->forget("ADMINID");
+       }
     return redirect('admin');
 });
 Route::get('admin/users/{id}', function ($id) {

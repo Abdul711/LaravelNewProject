@@ -177,6 +177,11 @@
               <li class="@yield('size_select')">
                                     <a href="{{url('admin/size')}}">Size</a>
                                 </li>
+                                 <li class="@yield('product_select')">
+                                    <a href="{{url('admin/product')}}">Product</a>
+                                </li> <li class="@yield('coupon_select')">
+                                    <a href="{{url('admin/coupon')}}">Coupon</a>
+                                </li>
 </ul>
                 </nav>
             </div>

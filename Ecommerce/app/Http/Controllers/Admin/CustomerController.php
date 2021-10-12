@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
 
-use App\Models\Tax;
+
+namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 
-class TaxController extends Controller
+class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +43,10 @@ class TaxController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Tax  $tax
+     * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function show(Tax $tax)
+    public function show(Customer $customer)
     {
         //
     }
@@ -52,10 +54,10 @@ class TaxController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Tax  $tax
+     * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function edit(Tax $tax)
+    public function edit(Customer $customer)
     {
         //
     }
@@ -64,10 +66,10 @@ class TaxController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Tax  $tax
+     * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tax $tax)
+    public function update(Request $request, Customer $customer)
     {
         //
     }
@@ -75,10 +77,10 @@ class TaxController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Tax  $tax
+     * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tax $tax)
+    public function destroy(Customer $customer)
     {
         //
     }

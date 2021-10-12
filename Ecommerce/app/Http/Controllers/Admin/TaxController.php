@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
 
-use App\Models\Slider;
+namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Controller;
+use App\Models\Tax;
 use Illuminate\Http\Request;
 
-class SliderController extends Controller
+class TaxController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,7 @@ class SliderController extends Controller
      */
     public function index()
     {
-        //
+      return view("admin/coupon");
     }
 
     /**
@@ -41,10 +42,10 @@ class SliderController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Slider  $slider
+     * @param  \App\Models\Tax  $tax
      * @return \Illuminate\Http\Response
      */
-    public function show(Slider $slider)
+    public function show(Tax $tax)
     {
         //
     }
@@ -52,10 +53,10 @@ class SliderController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Slider  $slider
+     * @param  \App\Models\Tax  $tax
      * @return \Illuminate\Http\Response
      */
-    public function edit(Slider $slider)
+    public function edit(Tax $tax)
     {
         //
     }
@@ -64,10 +65,10 @@ class SliderController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Slider  $slider
+     * @param  \App\Models\Tax  $tax
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Slider $slider)
+    public function update(Request $request, Tax $tax)
     {
         //
     }
@@ -75,10 +76,10 @@ class SliderController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Slider  $slider
+     * @param  \App\Models\Tax  $tax
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Slider $slider)
+    public function destroy(Tax $tax)
     {
         //
     }

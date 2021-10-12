@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
 
-use App\Models\Coupon;
+namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Controller;
+use App\Models\Admin\Coupon;
 use Illuminate\Http\Request;
 
 class CouponController extends Controller
@@ -13,8 +14,9 @@ class CouponController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
+    {  $data=Coupon::all();
+        $result["coupons"]=$data;
+        return view("admin/coupon",$result);
     }
 
     /**
@@ -22,9 +24,19 @@ class CouponController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function manage_coupon($id=null)
     {
-        //
+         if($id==""){
+             $pageTitle="Add Coupon";
+             $fontAwesome="plus";
+         }else{
+            $pageTitle="Update Coupon";
+            $fontAwesome="edit";
+         }
+         $result["pageTitle"]=$pageTitle;
+         $result["pageFontAwesome"]=$fontAwesome;
+         $result["id"]=$id;
+         return view("admin/manage_coupon",$result);
     }
 
     /**
@@ -35,7 +47,28 @@ class CouponController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        prx($request->post());
+        extract($request->post());
+        if($id==null){
+        $model= new Coupon();
+        $status=1;
+        }else{
+            $model=Coupon::find($id);
+            $status=$model->status;
+        }
+
+    
+        $model->coupon_code=$coupon_code;
+        $model->cart_min_value=$cart_min_value;
+        $model->coupon_amount=$coupon_amount;
+        $model->max_discount=$max_discount;
+        $model->coupon_type=$coupon_type;
+        $model->coupon_sub_type=$coupon_sub_type;
+        $model->status=$status;
+        $model->added_on=date("Y-m-d H:i:s");
+        $model->save();
+        return redirect("admin/coupon");
     }
 
     /**
