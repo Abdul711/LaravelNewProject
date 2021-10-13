@@ -164,4 +164,7 @@ $limit="";
         DB::table('coupons')->where('id',$id)->delete();
         return redirect('admin/coupon');
     }
+    public function detail($id){
+        
+    }
 }

@@ -70,6 +70,7 @@ Route::get("admin/coupon",[CouponController::class,"index"])->middleware("rooted
 Route::get("admin/coupon/manage/{id?}",[CouponController::class,"manage_coupon"]);
 Route::get('admin/coupon/delete/{id}',[CouponController::class,"destroy"]);
 Route::get('admin/coupon/status/{id}',[CouponController::class,"update_status"]);
+Route::get('admin/coupon/detail/{id}',[CouponController::class,"detail"]);
 Route::post("admin/coupon/manageprocess",[CouponController::class,"store"])->name('coupon.store');
 Route::get('admin/logout', function () {
        if(session()->has("ADMINID")){
