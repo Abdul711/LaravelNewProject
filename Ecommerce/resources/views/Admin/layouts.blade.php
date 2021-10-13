@@ -182,6 +182,12 @@
                                 </li> <li class="@yield('coupon_select')">
                                     <a href="{{url('admin/coupon')}}">Coupon</a>
                                 </li>
+                                 <li class="@yield('coupon_select')">
+                                    <a href="{{url('admin/coupon')}}">Tax</a>
+                                </li>
+                                 <li class="@yield('coupon_select')">
+                                    <a href="{{url('admin/coupon')}}">Order</a>
+                                </li>
 </ul>
                 </nav>
             </div>

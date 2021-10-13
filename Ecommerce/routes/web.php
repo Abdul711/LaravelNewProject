@@ -34,8 +34,9 @@ Route::get('admin/forgot',[AdminController::class,"forgot"]);
 
 Route::get('admin/category/manage/{id?}',[CategoryController::class,"create"]);
 Route::get('admin/category/delete/{id}',[CategoryController::class,"destroy"]);
+Route::get('admin/category/status/{id}',[CategoryController::class,"update_status"]);
 Route::get('admin/category/update_show/{id}',[CategoryController::class,"show_status"]);  
- Route::get('admin/category/status/{id}',[CategoryController::class,"update_status"]);
+
 Route::get('admin/category',[CategoryController::class,"index"]);
 Route::post('admin/category/manageprocess',[CategoryController::class,"store"])->name('category.store');
 /* Category Crud Operation */
@@ -65,8 +66,10 @@ Route::get('admin/size/delete/{id}',[SizeController::class,"destroy"]);
 Route::get('admin/order/manage/{id?}',[OrderController::class,"create"]);
 
 Route::get('admin/order',[OrderController::class,"index"]);
-Route::get("admin/coupon",[CouponController::class,"index"]);
+Route::get("admin/coupon",[CouponController::class,"index"])->middleware("rootedMid");
 Route::get("admin/coupon/manage/{id?}",[CouponController::class,"manage_coupon"]);
+Route::get('admin/coupon/delete/{id}',[CouponController::class,"destroy"]);
+Route::get('admin/coupon/status/{id}',[CouponController::class,"update_status"]);
 Route::post("admin/coupon/manageprocess",[CouponController::class,"store"])->name('coupon.store');
 Route::get('admin/logout', function () {
        if(session()->has("ADMINID")){

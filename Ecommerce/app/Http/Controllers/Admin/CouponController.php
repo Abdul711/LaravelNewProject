@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Coupon;
 use Illuminate\Http\Request;
-
+use DB;
 class CouponController extends Controller
 {
     /**
@@ -29,13 +29,37 @@ class CouponController extends Controller
          if($id==""){
              $pageTitle="Add Coupon";
              $fontAwesome="plus";
+            $coupon_code="";
+            $coupon_sub_type="";
+            $coupon_amount="";
+            $max_discount="";
+            $coupon_type="";
+            $cart_min_value="";
+$limit="";
          }else{
+             $model=Coupon::find($id);
             $pageTitle="Update Coupon";
             $fontAwesome="edit";
+            $coupon_code=$model->coupon_code;
+            $coupon_sub_type=$model->coupon_sub_type;
+            $coupon_amount=$model->coupon_amount;
+            	$max_discount=$model->max_discount;
+                $coupon_type=$model->coupon_type;
+                $cart_min_value=$model->cart_min_value;
+                $limit=$model->limit;
          }
          $result["pageTitle"]=$pageTitle;
          $result["pageFontAwesome"]=$fontAwesome;
          $result["id"]=$id;
+         $result["coupon_code"]=$coupon_code;
+         $result["coupon_sub_type"]=$coupon_sub_type;
+         $result["coupon_amount"]=$coupon_amount;
+         $result["max_discount"]=$max_discount;
+         $result["coupon_type"]=$coupon_type;
+         $result["cart_min_value"]=$cart_min_value;
+         $result["limit"]=$limit;
+
+   
          return view("admin/manage_coupon",$result);
     }
 
@@ -47,8 +71,19 @@ class CouponController extends Controller
      */
     public function store(Request $request)
     {
-
-        prx($request->post());
+      $coupon_code=  $request->post('coupon_code');
+      $id=  $request->post('id');
+        $request->validate([
+            'coupon_code'=>'required|alpha_num|unique:coupons,coupon_code,'.$id,
+            "coupon_amount"=>"required|numeric",
+            "coupon_type"=>"required",
+            "coupon_sub_type"=>"required"
+            
+        ],["coupon_code.alpha_num"=>"Coupon Code Must Be Alpha Numberic",
+        "coupon_code.unique"=>"The $coupon_code Coupon Code has already exists",
+         "coupon_amount.numeric"=>"coupon amount must be numeric"
+         
+    ]);
         extract($request->post());
         if($id==null){
         $model= new Coupon();
@@ -58,7 +93,7 @@ class CouponController extends Controller
             $status=$model->status;
         }
 
-    
+    $model->limit=$limit;
         $model->coupon_code=$coupon_code;
         $model->cart_min_value=$cart_min_value;
         $model->coupon_amount=$coupon_amount;
@@ -100,9 +135,21 @@ class CouponController extends Controller
      * @param  \App\Models\Coupon  $coupon
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Coupon $coupon)
+    public function update_status($id)
     {
-        //
+        $data=DB::table("coupons")->where("id","=",$id)->get();
+        $show_cate=$data[0]->status;
+        if($show_cate==1){
+         $show_status=0;
+        }else{
+            $show_status=1;
+        }
+        DB::table('coupons')->where('id','=',$id)->update([
+         
+            "status"=>$show_status
+          
+        ]);
+        return redirect('admin/coupon');
     }
 
     /**
@@ -111,8 +158,10 @@ class CouponController extends Controller
      * @param  \App\Models\Coupon  $coupon
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Coupon $coupon)
+    public function destroy($id)
     {
         //
+        DB::table('coupons')->where('id',$id)->delete();
+        return redirect('admin/coupon');
     }
 }
