@@ -51,6 +51,7 @@
                                                 <span class="help-block field-validation-valid"
                                                  data-valmsg-for="cc-name" data-valmsg-replace="true"></span>
                                             </div>
+                                           
                                             <div class="form-group">
                                                 <label for="cc-number" class="control-label mb-1">Max Discount</label>
                                                 <input id="cc-number" name="max_discount" type="text" 
@@ -59,6 +60,15 @@
                                                      value="{{$max_discount}}">
                                              
                                             </div>
+                                             <div class="form-group">
+                                                <label for="cc-number" class="control-label mb-1">Expiry Date</label>
+                                                <input id="datepicker" name="expiry_date" type="text" 
+                                                class="form-control cc-number identified visa" 
+                                                data-val="true"
+                                                     value="{{$expiry_date}}">
+                                             
+                                            </div>
+                                        
                                                       <div class="form-group">
                                                 <label for="cc-number" class="control-label mb-1">Limit Per User</label>
                                                 <input id="cc-number" name="limit" type="text" 

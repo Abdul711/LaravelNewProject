@@ -32,6 +32,8 @@
 
     <!-- Main CSS-->
     <link href="{{asset('AdminStyle/css/theme.css')}}" rel="stylesheet" media="all">
+        <link href="{{asset('AdminStyle/js/jquery-ui/jquery-ui.css')}}" rel="stylesheet" media="all">
+           <link href="{{asset('AdminStyle/js/jquery-ui/jquery-ui.structure.css')}}" rel="stylesheet" media="all">
     <body class="animsition">
     <div class="page-wrapper">
         <!-- HEADER MOBILE-->
@@ -266,7 +268,8 @@
 
 </div>
               <!-- Jquery JS-->
-    <script src="{{asset('AdminStyle/vendor/jquery-3.2.1.min.js')}}"></script>
+     <script src="{{asset('AdminStyle/vendor/jquery-3.2.1.min.js')}}"></script>
+       <script src="{{asset('AdminStyle/js/jquery-ui/jquery-ui.min.js')}}"></script>
     <!-- Bootstrap JS-->
     <script src="{{asset('AdminStyle/vendor/bootstrap-4.1/popper.min.js')}}"></script>
     <script src="{{asset('AdminStyle/vendor/bootstrap-4.1/bootstrap.min.js')}}"></script>
@@ -288,3 +291,4 @@
 
     <!-- Main JS-->
     <script src="{{asset('AdminStyle/js/main.js')}}"></script>
+       <script src="{{asset('AdminStyle/js/custom.js')}}"></script>

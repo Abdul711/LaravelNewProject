@@ -125,6 +125,7 @@ CREATE TABLE `coupons` (
   `added_on` datetime DEFAULT NULL ON UPDATE current_timestamp(),
   `limit` varchar(255) DEFAULT NULL,
     `max_discount` varchar(255) DEFAULT NULL,
+        `expiry_date` varchar(255) DEFAULT NULL,
     "cart_min_value" varchar(119) DEFAULT Null,
   `status` varchar(255) NOT NULL,
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

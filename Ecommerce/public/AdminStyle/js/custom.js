@@ -9,3 +9,12 @@ if(typeint=="password"){
 }
 
 });
+
+
+$("#datepicker" ).datepicker( {  showOtherMonths: true,
+    selectOtherMonths: true,
+    changeMonth: true,
+    changeYear: true,
+    dateFormat:"d-M-yy",
+    minDate: "-1D", maxDate: "+1M +10D"
+});

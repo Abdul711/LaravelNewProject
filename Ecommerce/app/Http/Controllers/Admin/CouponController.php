@@ -35,6 +35,7 @@ class CouponController extends Controller
             $max_discount="";
             $coupon_type="";
             $cart_min_value="";
+            $expiry_date="";
 $limit="";
          }else{
              $model=Coupon::find($id);
@@ -47,6 +48,7 @@ $limit="";
                 $coupon_type=$model->coupon_type;
                 $cart_min_value=$model->cart_min_value;
                 $limit=$model->limit;
+                $expiry_date=$model->expiry_date;
          }
          $result["pageTitle"]=$pageTitle;
          $result["pageFontAwesome"]=$fontAwesome;
@@ -58,7 +60,7 @@ $limit="";
          $result["coupon_type"]=$coupon_type;
          $result["cart_min_value"]=$cart_min_value;
          $result["limit"]=$limit;
-
+     $result["expiry_date"]=$expiry_date;
    
          return view("admin/manage_coupon",$result);
     }
@@ -71,6 +73,7 @@ $limit="";
      */
     public function store(Request $request)
     {
+       
       $coupon_code=  $request->post('coupon_code');
       $id=  $request->post('id');
         $request->validate([
@@ -85,6 +88,7 @@ $limit="";
          
     ]);
         extract($request->post());
+           
         if($id==null){
         $model= new Coupon();
         $status=1;
@@ -101,7 +105,9 @@ $limit="";
         $model->coupon_type=$coupon_type;
         $model->coupon_sub_type=$coupon_sub_type;
         $model->status=$status;
-        $model->added_on=date("Y-m-d H:i:s");
+        $model->added_on=date("Y-m-d H:i:s");       
+         $model->expiry_date=$expiry_date;
+
         $model->save();
         return redirect("admin/coupon");
     }
@@ -165,6 +171,8 @@ $limit="";
         return redirect('admin/coupon');
     }
     public function detail($id){
-        
+      $data = Coupon::find($id);
+      return view("admin/coupon_detail");
+      prx($data);
     }
 }
