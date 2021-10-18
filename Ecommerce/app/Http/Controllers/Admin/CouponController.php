@@ -106,7 +106,7 @@ $limit="";
         $model->coupon_sub_type=$coupon_sub_type;
         $model->status=$status;
         $model->added_on=date("Y-m-d H:i:s");       
-         $model->expiry_date=$expiry_date;
+         $model->expiry_date=date("d-M-Y",strtotime($expiry_date));
 
         $model->save();
         return redirect("admin/coupon");
@@ -172,7 +172,25 @@ $limit="";
     }
     public function detail($id){
       $data = Coupon::find($id);
-      return view("admin/coupon_detail");
-      prx($data);
+      $result["coupon_code"]=$data->coupon_code;
+      $result["coupon_type"]=$data->coupon_type;
+      $result["coupon_sub_type"]=$data->coupon_sub_type;
+      $result["coupon_discount"]=$data->coupon_amount;
+      $result["limit"]=$data->limit;
+         if($data->status==0){
+             $newstatus="Deactive";
+         }else{
+            $newstatus="Active";
+         }
+       $expiry_date=  strtotime($data->expiry_date);
+       $current_date=strtotime(data("d-M-Y"));
+
+      $result["status"] = $newstatus;
+      $result["max_discount"] = $data->max_discount;
+      $result["cart_min_value"] = $data->cart_min_value;
+      $result["expiry_date"] = $data->expiry_date;
+
+      return view("admin/coupon_detail",$result);
+
     }
 }

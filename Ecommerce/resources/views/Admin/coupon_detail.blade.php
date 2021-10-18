@@ -1,7 +1,7 @@
 @extends('admin/layouts')
 @section("container")
 @section('brand_select','active')
-@section("pageTitle","Brand")
+@section("pageTitle","$coupon_code Coupon Detail")
 <div class="row">
                                                  
                             <div class="col-lg-12">
@@ -13,35 +13,40 @@
                                                 <tbody>
                                                     <tr>
                                                         <td>Coupon Code</td>
-                                                        <td class="text-right">$119,366.96</td>
+                                                        <td class="text-right">{{$coupon_code}}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Australia</td>
-                                                        <td class="text-right">$70,261.65</td>
+                                                        <td>Coupon Type</td>
+                                                        <td class="text-right">{{$coupon_type}}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>United Kingdom</td>
-                                                        <td class="text-right">$46,399.22</td>
+                                                        <td>Coupon Sub Type</td>
+                                                        <td class="text-right">{{$coupon_sub_type}}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Turkey</td>
-                                                        <td class="text-right">$35,364.90</td>
+                                                        <td>Coupon Discount </td>
+                                                        @if ($coupon_type=="fixed")
+                                                               <td class="text-right">{{$coupon_discount}} Rs</td>
+                                                               @else
+                                                                   <td class="text-right">{{$coupon_discount}} % </td>
+                                                        @endif
+                                                     
                                                     </tr>
                                                     <tr>
-                                                        <td>Germany</td>
-                                                        <td class="text-right">$20,366.96</td>
+                                                        <td>Usage Limit Per User</td>
+                                                        <td class="text-right">{{$limit}}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>France</td>
-                                                        <td class="text-right">$10,366.96</td>
+                                                        <td>Max Discount</td>
+                                                        <td class="text-right">{{$max_discount}} Rs</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Australia</td>
-                                                        <td class="text-right">$5,366.96</td>
+                                                        <td>Cart Min Value </td>
+                                                        <td class="text-right">{{$cart_min_value}}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Italy</td>
-                                                        <td class="text-right">$1639.32</td>
+                                                        <td>Current Status</td>
+                                                        <td class="text-right">{{$status}}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
