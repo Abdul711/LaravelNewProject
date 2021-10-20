@@ -8,8 +8,11 @@
                          
                            <a href="{{url('admin/category/manage')}}"> <button type="button" class="btn btn-outline-primary">
                                             <i class="fa fa-plus"></i>&nbsp; Add </button></a>
+                                             <a href="{{url('admin/category/execelreport')}}" class="btn btn-primary">Excel</a>
+  <a href="{{url('admin/category/pdfreport')}}" class="btn btn-success">PDF</a>
                                 <div class="table-responsive table--no-card m-b-30">
- <a href="https://wa.me/923323565866">Click Me</a>
+ <!--<a href="https://wa.me/923323565866">Click Me</a>!-->
+
                                     <table class="table table-borderless table-striped table-earning">
                                         <thead>
                                             <tr>

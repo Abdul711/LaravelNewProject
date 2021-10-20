@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
+use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Validator;
 use DB;
+use Excel;
+
+use App\Exports\CategoryExcel;
 class CategoryController extends Controller
 {
     /**
@@ -15,10 +18,13 @@ class CategoryController extends Controller
      */
     public function index()
     {
-      /*  $otps=rand(89,456);
-        $mobilenumber="92332356586";
+    /*   $otps=rand(89,456);
+        $mobilenumber="923323565866";
+    $instance=352884; 
+    $tokem="5hkj2wn3d55fjisu";
         $arr=json_encode(array('body' =>"Hello Your Otp is $otps" ,"phone"=>$mobilenumber ));
-       $url= "https://api.chat-api.com/instance343403/message?token=d1q7370j3sn889na";
+
+    $url= "https://api.chat-api.com/instance$instance/message?token=$tokem";
        $ch = curl_init();
        curl_setopt($ch,CURLOPT_URL,$url);
        curl_setopt($ch,CURLOPT_POST,true);
@@ -28,8 +34,9 @@ class CategoryController extends Controller
 
      $result=curl_exec($ch);
      curl_close($ch);
-     echo $result;*/
+     echo $result;
      
+     die();*/
        $data["categories"]=DB::table('categories')->get();
        return view("admin/category",$data);
     }
@@ -208,5 +215,9 @@ DB::table('categories')->insert([
     {
         DB::table('categories')->where('id',$id)->delete();
         return redirect('admin/category');
+    }
+    public function excelreport () 
+    {
+        return Excel::download(new CategoryExcel, 'users.xlsx');
     }
 }
