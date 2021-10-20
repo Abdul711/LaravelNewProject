@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Models\Admin\Category;
 use Illuminate\Http\Request;
 use Validator;
 use DB;
 use Excel;
-
+use PDF;
 use App\Exports\CategoryExcel;
 class CategoryController extends Controller
 {
@@ -216,8 +216,24 @@ DB::table('categories')->insert([
         DB::table('categories')->where('id',$id)->delete();
         return redirect('admin/category');
     }
-    public function excelreport () 
+    public function exportreport ($form) 
+
+    
     {
-        return Excel::download(new CategoryExcel, 'users.xlsx');
+               if($form=="excel"){
+                   $doctype="xlsx";
+                   return Excel::download(new CategoryExcel,"users.$doctype");
+                }
+               elseif($form=="pdf"){
+          
+                $data["categories"]=DB::table('categories')->get();
+           
+     
+
+
+
+               }  
+
     }
+      
 }

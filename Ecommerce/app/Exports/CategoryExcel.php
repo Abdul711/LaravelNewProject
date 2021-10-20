@@ -8,15 +8,15 @@ use DB;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
-
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\RegistersEventListeners;
 use Maatwebsite\Excel\Events\BeforeExport;
 use Maatwebsite\Excel\Events\BeforeWriting;
 use Maatwebsite\Excel\Events\BeforeSheet;
 use Maatwebsite\Excel\Events\AfterSheet;
-
-class CategoryExcel implements FromCollection,WithHeadings,WithMapping,WithEvents
+use Maatwebsite\Excel\Concerns\WithStyles;
+class CategoryExcel implements FromCollection,WithHeadings,WithMapping,WithEvents,ShouldAutoSize,WithStyles
 {
    use RegistersEventListeners;
     /**
@@ -36,26 +36,30 @@ class CategoryExcel implements FromCollection,WithHeadings,WithMapping,WithEvent
             'Date',
         ];
     }
+    public function styles(Worksheet $sheet)
+    {
+        return [
+            // Style the first row as bold text.
+           "A1"   => ['font' => ['bold' => true]],
+
+            // Styling a specific cell by coordinate.
+            'B2' => ['font' => ['italic' => true]],
+
+            // Styling an entire column.
+          
+        ];
+    }
+
+
     public function map($data): array
     {
         
         return [
+   
             $data->categories_name,
             date("d-F-Y",strtotime($data->added_on)),
       
         ];
     }
-    public static function afterSheet(AfterSheet $event)
-    {
-        $cells = $event->sheet->getDelegate()->getCellCollection();
-
-        foreach ($cells as $cell) {
-            $cells = $event->sheet->getDelegate()->getCellCollection();
-
-            foreach ($cells as $cell) {
-                $event->sheet->getDelegate()->getColumnDimension($cell)->setWidth(3000);
-            }
-        }
-    }
-
+      
 }

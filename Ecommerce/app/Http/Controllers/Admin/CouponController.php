@@ -88,7 +88,9 @@ $limit="";
          
     ]);
         extract($request->post());
-           
+              if($coupon_type=="percentage" && $coupon_amount>=100){
+                  $coupon_amount=25;
+              }
         if($id==null){
         $model= new Coupon();
         $status=1;
@@ -183,13 +185,39 @@ $limit="";
             $newstatus="Active";
          }
        $expiry_date=  strtotime($data->expiry_date);
-       $current_date=strtotime(data("d-M-Y"));
+       $current_date=strtotime(date("d-M-Y"));
+            $difference= $expiry_date-$current_date;
+              
+                    $minute=abs(round($difference / (60 * 60 )));
+                 $days=abs(round($difference / (60 * 60 * 24)));
 
+                   
+               
+             if($expiry_date<=$current_date){
+              $expired="yes";
+             }else{
+                 $expired="no";
+             }
+             $datetime1 = new DateTime("2010-06-20");
+
+             $datetime2 = new DateTime("2011-06-22");
+             
+             $difference = $datetime1->diff($datetime2);
+             
+             echo 'Difference: '.$difference->y.' years, ' 
+                                .$difference->m.' months, ' 
+                                .$difference->d.' days';
+             
+             print_r($difference);
+echo date("d-M-Y");
       $result["status"] = $newstatus;
       $result["max_discount"] = $data->max_discount;
       $result["cart_min_value"] = $data->cart_min_value;
       $result["expiry_date"] = $data->expiry_date;
+      $result["expired"]=$expired;
 
+      prx($result);
+      die();
       return view("admin/coupon_detail",$result);
 
     }

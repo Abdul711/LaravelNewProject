@@ -48,6 +48,10 @@
                                                         <td>Current Status</td>
                                                         <td class="text-right">{{$status}}</td>
                                                     </tr>
+                                                    <tr>
+                                                    <td> Expiry Date </td>
+                                                         <td class="text-right">{{$expiry_date}}</td>
+                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>
