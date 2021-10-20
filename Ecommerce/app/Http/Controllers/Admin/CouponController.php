@@ -198,26 +198,15 @@ $limit="";
              }else{
                  $expired="no";
              }
-             $datetime1 = new DateTime("2010-06-20");
-
-             $datetime2 = new DateTime("2011-06-22");
-             
-             $difference = $datetime1->diff($datetime2);
-             
-             echo 'Difference: '.$difference->y.' years, ' 
-                                .$difference->m.' months, ' 
-                                .$difference->d.' days';
-             
-             print_r($difference);
-echo date("d-M-Y");
+    
+ date("d-M-Y");
       $result["status"] = $newstatus;
       $result["max_discount"] = $data->max_discount;
       $result["cart_min_value"] = $data->cart_min_value;
       $result["expiry_date"] = $data->expiry_date;
       $result["expired"]=$expired;
 
-      prx($result);
-      die();
+  
       return view("admin/coupon_detail",$result);
 
     }

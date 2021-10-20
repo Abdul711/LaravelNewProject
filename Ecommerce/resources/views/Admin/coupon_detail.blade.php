@@ -1,6 +1,6 @@
 @extends('admin/layouts')
 @section("container")
-@section('brand_select','active')
+@section('coupon_select','active')
 @section("pageTitle","$coupon_code Coupon Detail")
 <div class="row">
                                                  
@@ -48,10 +48,16 @@
                                                         <td>Current Status</td>
                                                         <td class="text-right">{{$status}}</td>
                                                     </tr>
+                                                    <tr> 
+                                                    <td> Expired </td> 
+                                                    <td class="text-right"> {{$expired}}</td>
+                                                    </tr> 
                                                     <tr>
+                                                   
                                                     <td> Expiry Date </td>
                                                          <td class="text-right">{{$expiry_date}}</td>
                                                     </tr>
+                                                    
                                                 </tbody>
                                             </table>
                                         </div>

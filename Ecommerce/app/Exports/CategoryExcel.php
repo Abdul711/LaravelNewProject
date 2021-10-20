@@ -40,10 +40,10 @@ class CategoryExcel implements FromCollection,WithHeadings,WithMapping,WithEvent
     {
         return [
             // Style the first row as bold text.
-           "A1"   => ['font' => ['bold' => true]],
+           "A1"   => ['font' => ['bold' => true, "family"=>"Arial"]],
 
             // Styling a specific cell by coordinate.
-            'B2' => ['font' => ['italic' => true]],
+            "B1"   => ['font' => ['bold' => true, "family"=>"Arial"]],
 
             // Styling an entire column.
           
