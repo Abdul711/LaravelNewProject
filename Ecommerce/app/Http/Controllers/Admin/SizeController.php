@@ -3,8 +3,8 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Controller;
-use App\Models\Size;
+
+use App\Models\Admin\Size;
 use Illuminate\Http\Request;
 use DB;
 

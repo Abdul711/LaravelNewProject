@@ -186,27 +186,28 @@ $limit="";
          }
        $expiry_date=  strtotime($data->expiry_date);
        $current_date=strtotime(date("d-M-Y"));
-            $difference= $expiry_date-$current_date;
+            $difference= abs($expiry_date-$current_date);
               
-                    $minute=abs(round($difference / (60 * 60 )));
-                 $days=abs(round($difference / (60 * 60 * 24)));
-
-                   
+                    $minute=floor($difference / (60 * 60 ));
+                 $days=floor($difference / (60 * 60 * 24));
+                  $timestamp=date("Y-m-d",strtotime($data->expiry_date));
+                  $expi=facebook_time_ago($timestamp);  
                
              if($expiry_date<=$current_date){
               $expired="yes";
              }else{
                  $expired="no";
              }
-    
+   
  date("d-M-Y");
       $result["status"] = $newstatus;
       $result["max_discount"] = $data->max_discount;
       $result["cart_min_value"] = $data->cart_min_value;
       $result["expiry_date"] = $data->expiry_date;
       $result["expired"]=$expired;
-
-  
+      $result["expiry_msg"]=$expi;
+     /* prx($result);
+      die();*/
       return view("admin/coupon_detail",$result);
 
     }

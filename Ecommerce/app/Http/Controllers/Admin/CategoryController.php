@@ -222,17 +222,25 @@ DB::table('categories')->insert([
     {
                if($form=="excel"){
                    $doctype="xlsx";
-                   return Excel::download(new CategoryExcel,"users.$doctype");
+                 
                 }
                elseif($form=="pdf"){
           
-                $data["categories"]=DB::table('categories')->get();
-           
-     
+             
+                 $data=DB::table("categories")->get();
+                 $data=json_decode($data,true);
+$result["categories"]=$data;
+   $pageTitle="Daily Shop Category";
+               
+                 
+                $pdf = PDF::loadView("pdf/category",$result);
+                return $pdf->download('document.pdf');
+  
 
 
 
                }  
+               return Excel::download(new CategoryExcel,"users.$doctype");
 
     }
       

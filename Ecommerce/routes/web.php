@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\SizeController;
+use App\Http\Controllers\TaxController;
+use App\Http\Controllers\OrderController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -72,6 +74,7 @@ Route::get('admin/coupon/delete/{id}',[CouponController::class,"destroy"]);
 Route::get('admin/coupon/status/{id}',[CouponController::class,"update_status"]);
 Route::get('admin/coupon/detail/{id}',[CouponController::class,"detail"]);
 Route::post("admin/coupon/manageprocess",[CouponController::class,"store"])->name('coupon.store');
+Route::get("admin/tax",[TaxController::class,"index"]);
 Route::get('admin/logout', function () {
        if(session()->has("ADMINID")){
       

@@ -21,7 +21,7 @@
                                                 <th class="text-right">total</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody  id="tableBody">
                                             <tr>
                                                 <td>2018-09-29 05:57</td>
                                                 <td>100398</td>
@@ -90,4 +90,10 @@
                                     </table>
                                 </div>
                             </div>
+                             
+                    
                             @endsection
+                                    <script>
+                            HTML= document.getElementById("tableBody").innerHTML;
+                            console.log(HTML);
+                            </script>

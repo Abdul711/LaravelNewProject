@@ -10,7 +10,7 @@
                                         <form action="{{route('color.store')}}" method="post" novalidate="novalidate">
                                             <div class="form-group">
                                                 <label for="cc-payment" class="control-label mb-1">Color Name</label>
-                                                <input id="cc-pament" name="color_name" type="text" class="form-control" aria-required="true" aria-invalid="false" value="{{$sizeName}}">
+                                                <input id="cc-pament" name="color_name" type="text" class="form-control" aria-required="true" aria-invalid="false" value="{{$colorName}}">
                                             </div>
                                     <input type="hidden" name="id" value="{{$id}}">
                                         @csrf

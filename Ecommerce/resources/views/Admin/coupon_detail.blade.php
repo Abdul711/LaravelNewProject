@@ -5,7 +5,7 @@
 <div class="row">
                                                  
                             <div class="col-lg-12">
-          
+                 <h1 class="text-center"> {{$coupon_code}} </h1>
           <div class="au-card au-card--bg-blue au-card-top-countries m-b-30">
                                     <div class="au-card-inner">
                                         <div class="table-responsive">
@@ -53,11 +53,15 @@
                                                     <td class="text-right"> {{$expired}}</td>
                                                     </tr> 
                                                     <tr>
-                                                   
                                                     <td> Expiry Date </td>
                                                          <td class="text-right">{{$expiry_date}}</td>
                                                     </tr>
-                                                    
+                                                    @if($expired=="yes")
+                                                        <tr>
+                                                    <td></td>
+                                                         <td class="text-right" colspan="2">{{$expiry_msg}}</td>
+                                                    </tr>
+                                                    @endif
                                                 </tbody>
                                             </table>
                                         </div>
