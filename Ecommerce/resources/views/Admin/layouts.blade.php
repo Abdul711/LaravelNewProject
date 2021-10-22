@@ -184,7 +184,7 @@
                                 </li> <li class="@yield('coupon_select')">
                                     <a href="{{url('admin/coupon')}}">Coupon</a>
                                 </li>
-                                 <li class="@yield('coupon_select')">
+                                 <li class="@yield('tax_select')">
                                     <a href="{{url('admin/tax')}}">Tax</a>
                                 </li>
                                  <li class="@yield('coupon_select')">
@@ -268,7 +268,7 @@
 
 </div>
               <!-- Jquery JS-->
-     <script src="{{asset('AdminStyle/vendor/jquery-3.2.1.min.js')}}"></script>
+   <script src="{{asset('AdminStyle/vendor/jquery-3.2.1.min.js')}}"></script>
        <script src="{{asset('AdminStyle/js/jquery-ui/jquery-ui.min.js')}}"></script>
     <!-- Bootstrap JS-->
     <script src="{{asset('AdminStyle/vendor/bootstrap-4.1/popper.min.js')}}"></script>

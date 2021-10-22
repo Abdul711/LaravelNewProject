@@ -18,3 +18,8 @@ $("#datepicker" ).datepicker( {  showOtherMonths: true,
     dateFormat:"d-M-yy",
     minDate: "-10M 1D", maxDate: "+1M +10D"
 });
+
+
+const myFunct= ()=>{
+alert();
+}

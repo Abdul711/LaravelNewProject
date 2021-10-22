@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\TaxController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\FrontEnd\FrontEndDisplay;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,9 +22,8 @@ use App\Http\Controllers\OrderController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [FrontEndDisplay::class,"index"]);
+
 
 Route::get('/admin',[AdminController::class,"index"]);
 Route::post('/admin',[AdminController::class,"login"]);
@@ -75,6 +75,9 @@ Route::get('admin/coupon/status/{id}',[CouponController::class,"update_status"])
 Route::get('admin/coupon/detail/{id}',[CouponController::class,"detail"]);
 Route::post("admin/coupon/manageprocess",[CouponController::class,"store"])->name('coupon.store');
 Route::get("admin/tax",[TaxController::class,"index"]);
+Route::get("admin/tax/manage/{id?}",[TaxController::class,"manage_tax"]);
+Route::get("admin/tax/{action}/{id}",[TaxController::class,"manage_status_tax"]);
+Route::post("admin/tax/manageprocess",[TaxController::class,"manage_tax_store"])->name('tax.store');
 Route::get('admin/logout', function () {
        if(session()->has("ADMINID")){
       
