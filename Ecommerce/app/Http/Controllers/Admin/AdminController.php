@@ -24,6 +24,12 @@ class AdminController extends Controller
 
 
         if(isset($data[0])){
+
+                   if($data[0]->role!=0 && $data[0]->verified==0){
+                     session()->flash("error_message","Please Wait Until Admin Give Permisssion To Login");
+                     return    redirect("admin");
+                   }
+
             if(Hash::check($password, $data[0]->password)){
                $request->session()->put('ADMINID',$data[0]->id );
                $request->session()->put('ADMIN_LOGIN',true);
@@ -98,7 +104,12 @@ class AdminController extends Controller
         }
 
        
-        $de= DB::table("admins")->insert(["status"=>1,"email"=>$email,"password"=>Hash::make($password),"role"=>$role,"verified"=>0,"mobile"=>$mobile,"username"=>$username]);
+        $de= DB::table("admins")->insert([
+           "status"=>1,
+           "email"=>$email,
+           "added_on"=>date('Y-m-d'),
+           "password"=>Hash::make($password),
+           "role"=>$role,"verified"=>0,"mobile"=>$mobile,"username"=>$username]);
     if($de){
        session()->flash("successmsg","Success");
        return redirect("admin/signup");
