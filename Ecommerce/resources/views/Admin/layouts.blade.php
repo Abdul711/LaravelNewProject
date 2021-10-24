@@ -187,8 +187,11 @@
                                  <li class="@yield('tax_select')">
                                     <a href="{{url('admin/tax')}}">Tax</a>
                                 </li>
-                                 <li class="@yield('coupon_select')">
+                                 <li class="@yield('order_select')">
                                     <a href="{{url('admin/order')}}">Order</a>
+                                </li>
+                                <li class="@yield('otheradmin_select')">
+                                    <a href="{{url('admin/otheradmin')}}">Other Admin</a>
                                 </li>
 </ul>
                 </nav>

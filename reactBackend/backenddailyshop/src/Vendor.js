@@ -5,7 +5,11 @@ import Table from './Table';
 
 function Vendor(){
 
-    const res= axios.get("http://localhost:8000/api/vendor");
+    const res= axios.get("http://localhost:8000/api/vendor/1");
+
+
+
+    
  console.log(res);
 return(
     <h1>H</h1>

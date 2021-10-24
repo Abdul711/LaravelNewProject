@@ -19,4 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::get("brand",[BrandController::class,"getData"]);
-Route::get("vendor",[VendorController::class,"getData"]);
+Route::get("vendor/{id?}",[VendorController::class,"getData"]);

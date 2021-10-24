@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\TaxController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OtherAdminController;
 use App\Http\Controllers\FrontEnd\FrontEndDisplay;
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +34,10 @@ Route::get('admin/forgot',[AdminController::class,"forgot"]);
 
     Route::group(['middleware'=>'admin_auth'],function(){
         Route::get('admin/dashboard',[AdminController::class,"dashboard"]);
-
+        Route::get('admin/otheradmin/status/{id?}',[OtherAdminController::class,"update_status"]);
+        Route::get('admin/otheradmin',[OtherAdminController::class,"index"]);
+        Route::get('admin/otheradmin/verified/{id}',[OtherAdminController::class,"update"]);
+        Route::get('admin/otheradmin/detail/{id}',[OtherAdminController::class,"detail"]);
 Route::get('admin/category/manage/{id?}',[CategoryController::class,"create"]);
 Route::get('admin/category/delete/{id}',[CategoryController::class,"destroy"]);
 Route::get('admin/category/status/{id}',[CategoryController::class,"update_status"]);

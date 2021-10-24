@@ -12,9 +12,9 @@ class VendorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getData()
+    public function getData($id=null)
     {
-        $data=Vendor::all();
+        $data=Vendor::where('role','=','1')->get();
         return $data;
     }
 

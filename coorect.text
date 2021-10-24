@@ -1,0 +1,22 @@
+    if($data[0]->role!=0 && $data[0]->verified==0){
+                     session()->flash("error_message","Please Wait Until Admin Give Permisssion To Login");
+                     return    redirect("admin");
+                   }
+                   if($data[0]->role!=0 && $data[0]->status==0){
+                     session()->flash("error_message","Your Are Blocked By Admin");
+                     return    redirect("admin");
+                   }
+               setcookie("EMAILADMIN", $email, time() + (86400 * 30), "/"); 
+                   Cookie::queue('ADMIN', 'value');
+                   $value = Cookie::get('ADMIN');
+                   if(Hash::check($password, $data[0]->password)){
+                     $request->session()->put('ADMINID',$data[0]->id );
+                     $request->session()->put('ADMINUSER',$data[0]->username );
+                     $request->session()->put('ADMIN_LOGIN',true);
+                     $request->session()->put('ADMINROLE',$data[0]->role );
+                      return redirect('admin/dashboard');
+                  }else{
+                     session()->flash("error_message","Wrong Password");
+                     return    redirect("admin");
+                  }
+         }

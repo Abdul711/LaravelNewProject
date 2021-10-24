@@ -61,6 +61,13 @@
                                                     <td></td>
                                                          <td class="text-right" colspan="2">{{$expiry_msg}}</td>
                                                     </tr>
+                                                    @else
+                                                    <tr>
+                                                    <td></td>
+                                                         <td class="text-right" colspan="2">
+                                                    {{$remaining_days}}
+                                                    </td>
+                                                    </tr>
                                                     @endif
                                                 </tbody>
                                             </table>

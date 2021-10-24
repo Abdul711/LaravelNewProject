@@ -173,8 +173,10 @@ $limit="";
         return redirect('admin/coupon');
     }
     public function detail($id){
+   
       $data = Coupon::find($id);
-      $result["coupon_code"]=$data->coupon_code;
+      $coupon_code= $data->coupon_code;
+      $result["coupon_code"]=$coupon_code;
       $result["coupon_type"]=$data->coupon_type;
       $result["coupon_sub_type"]=$data->coupon_sub_type;
       $result["coupon_discount"]=$data->coupon_amount;
@@ -198,7 +200,49 @@ $limit="";
              }else{
                  $expired="no";
              }
-   
+             $expiry_date;
+        
+                 $current_date;
+             
+                 $diff=$expiry_date-$current_date;
+                 
+                      $day=floor($diff/(60*60*24));
+                    $months=floor($diff/(60*60*24*30));
+                     $year=floor($diff/(60*60*24*30*12));
+
+
+
+        if($day==0){
+
+         $daydiff="Coupon Code $coupon_code will Expiry Today";
+        }else{
+                if($day==1){
+                    $daydiff="Coupon Code $coupon_code will Expiry Tommorrow";
+                }else{
+                    if($day>=30){
+                         if($months>=12){
+                             if($year==1){
+                            $daydiff="$year Year is Left In Expiry Of Coupon Code $coupon_code";
+                             }else {
+                                $daydiff="$year Years Are Left In Expiry Of Coupon Code $coupon_code";
+                             }
+                         }else{
+                             if($months==1){
+                                $daydiff="One Month Is Left In Expiry Of Coupon Code $coupon_code";
+                             }else{
+                                $daydiff="$months Month  Are  Left In Expiry Of Coupon Code $coupon_code";
+                             }
+                         }
+                    }else {
+                        $daydiff=" $day day s Are  Left In Expiry Of Coupon Code $coupon_code";
+                    }
+                }
+          
+       
+        }
+     
+
+
  date("d-M-Y");
       $result["status"] = $newstatus;
       $result["max_discount"] = $data->max_discount;
@@ -206,6 +250,11 @@ $limit="";
       $result["expiry_date"] = $data->expiry_date;
       $result["expired"]=$expired;
       $result["expiry_msg"]=$expi;
+      $result["remaining_days"]=$daydiff;
+      $expiry_date=  strtotime($data->expiry_date);
+      $current_date=strtotime(date("d-M-Y"));
+/*prx($result);*/
+ 
      /* prx($result);
       die();*/
       return view("admin/coupon_detail",$result);

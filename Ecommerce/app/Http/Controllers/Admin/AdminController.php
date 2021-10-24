@@ -7,48 +7,24 @@ use Illuminate\Http\Request;
 use Validator;
 use Illuminate\Support\Facades\DB;
 use Hash;
+use Cookie;
 class AdminController extends Controller
 {
    public function login(Request $request){
 
      $email=$request->post("email");
      $password=$request->post("password");
+
+
+
+
      $validEmail="/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/i";
-     $validPassword="/[A-Za-z0-9@]{5,}$/i";
+ 
      if(preg_match_all($validEmail,$email)){
-
-      if(preg_match_all($validPassword,$password)){
-  $data= DB::table('admins')->where('email','=',$email)->get();
-
-          
-
-
-        if(isset($data[0])){
-
-                   if($data[0]->role!=0 && $data[0]->verified==0){
-                     session()->flash("error_message","Please Wait Until Admin Give Permisssion To Login");
-                     return    redirect("admin");
-                   }
-
-            if(Hash::check($password, $data[0]->password)){
-               $request->session()->put('ADMINID',$data[0]->id );
-               $request->session()->put('ADMIN_LOGIN',true);
-               $request->session()->put('ADMINROLE',$data[0]->role );
-                return redirect('admin/dashboard');
-            }
-        }else{
-         session()->flash("error_message","This email is not Register");
-       return    redirect("admin");
-        }
-      }else{
-         session()->flash("error_message","$password is not Valid Password");
-         return    redirect("admin");
+         if(isset($data[0])){
+              
       }
-      }else{
-         session()->flash("error_message","$email is Not a Valid Email");
-         return    redirect("admin");
-      }   
-
+     }
 
 
    }

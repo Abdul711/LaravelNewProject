@@ -16,7 +16,7 @@ $("#datepicker" ).datepicker( {  showOtherMonths: true,
     changeMonth: true,
     changeYear: true,
     dateFormat:"d-M-yy",
-    minDate: "-10M 1D", maxDate: "+1M +10D"
+    minDate: "-1Y 2M 1D", maxDate: "+1M +10D"
 });
 
 
