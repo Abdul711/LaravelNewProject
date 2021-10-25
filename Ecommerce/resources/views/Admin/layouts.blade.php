@@ -167,10 +167,25 @@
                     <li class="@yield('dashboard_select')">
                                     <a href="{{url('admin/dashboard')}}">Dashboard</a>
                                 </li>
-                                <li class="@yield('category_select')">
+                   
+                                @if(session()->get("ADMINROLE")!=2)
+                                 <li class="@yield('product_select')">
+                                    <a href="{{url('admin/product')}}">Product</a>
+                                </li>
+                                      @if(session()->get("ADMINROLE")!=1)
+                                 <li class="@yield('coupon_select')">
+                                    <a href="{{url('admin/coupon')}}">Coupon</a>
+                                </li>
+                                 <li class="@yield('tax_select')">
+                                    <a href="{{url('admin/tax')}}">Tax</a>
+                                </li>
+                                 <li class="@yield('otheradmin_select')">
+                                    <a href="{{url('admin/otheradmin')}}">Other Admin</a>
+                                </li>
+                                             <li class="@yield('category_select')">
                                     <a href="{{url('admin/category')}}">Category</a>
                                 </li>
-                                    <li class="@yield('brand_select')">
+                             <li class="@yield('brand_select')">
                                     <a href="{{url('admin/brand')}}">Brand</a>
                                 </li>
                   <li class="@yield('color_select')">
@@ -179,20 +194,14 @@
               <li class="@yield('size_select')">
                                     <a href="{{url('admin/size')}}">Size</a>
                                 </li>
-                                 <li class="@yield('product_select')">
-                                    <a href="{{url('admin/product')}}">Product</a>
-                                </li> <li class="@yield('coupon_select')">
-                                    <a href="{{url('admin/coupon')}}">Coupon</a>
-                                </li>
-                                 <li class="@yield('tax_select')">
-                                    <a href="{{url('admin/tax')}}">Tax</a>
-                                </li>
-                                 <li class="@yield('order_select')">
+                                 @endif
+                                @endif
+                          
+                                <li class="@yield('order_select')">
                                     <a href="{{url('admin/order')}}">Order</a>
                                 </li>
-                                <li class="@yield('otheradmin_select')">
-                                    <a href="{{url('admin/otheradmin')}}">Other Admin</a>
-                                </li>
+                              
+                            
 </ul>
                 </nav>
             </div>
@@ -220,7 +229,8 @@
                                          
                                         </div>
                                         <div class="content">
-                                            <a class="js-acc-btn" href="#">john doe</a>
+                                            <a class="js-acc-btn" href="#">
+                                           {{session()->get('ADMINUSER')}}</a>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
                                             
@@ -290,6 +300,7 @@
     <script src="{{asset('AdminStyle/vendor/perfect-scrollbar/perfect-scrollbar.js')}}"></script>
     <script src="{{asset('AdminStyle/vendor/chartjs/Chart.bundle.min.js')}}"></script>
     <script src="{{asset('AdminStyle/vendor/select2/select2.min.js')}}">
+       <script src="{{asset('AdminStyle/vendor/jquery-3.2.1.min.js')}}"></script>
     </script>
 
     <!-- Main JS-->

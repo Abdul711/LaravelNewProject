@@ -82,6 +82,7 @@ Route::get("admin/tax",[TaxController::class,"index"]);
 Route::get("admin/tax/manage/{id?}",[TaxController::class,"manage_tax"]);
 Route::get("admin/tax/{action}/{id}",[TaxController::class,"manage_status_tax"]);
 Route::post("admin/tax/manageprocess",[TaxController::class,"manage_tax_store"])->name('tax.store');
+
 Route::get('admin/logout', function () {
        if(session()->has("ADMINID")){
       

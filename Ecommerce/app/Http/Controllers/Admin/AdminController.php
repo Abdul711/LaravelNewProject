@@ -19,12 +19,35 @@ class AdminController extends Controller
 
 
      $validEmail="/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/i";
- 
-     if(preg_match_all($validEmail,$email)){
+     if(!preg_match_all($validEmail,$email)){
+      session()->flash("error_message","Invalid Email You Entered");
+      return    redirect("admin");
+     }  
+       $data=DB::table("admins")->where("email","=",$email)->get();
          if(isset($data[0])){
-              
-      }
-     }
+            if($data[0]->role!=0 && $data[0]->verified==0){
+               session()->flash("error_message","Please Wait Until Admin Give Permisssion To Login");
+               return    redirect("admin");
+             }
+             if($data[0]->role!=0 && $data[0]->status==0){
+               session()->flash("error_message","Your Are Blocked By Admin");
+               return    redirect("admin");
+             }
+             if(Hash::check($password, $data[0]->password)){
+               $request->session()->put('ADMINID',$data[0]->id );
+               $request->session()->put('ADMINUSER',$data[0]->username );
+               $request->session()->put('ADMIN_LOGIN',true);
+               $request->session()->put('ADMINROLE',$data[0]->role );
+                return redirect('admin/dashboard');
+            }else{
+               session()->flash("error_message","Wrong Password");
+               return    redirect("admin");
+            }
+         }else{
+            session()->flash("error_message"," Email $email is Not Register");
+            return    redirect("admin");
+         }
+   
 
 
    }

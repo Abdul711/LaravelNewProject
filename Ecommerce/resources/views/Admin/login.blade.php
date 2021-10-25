@@ -69,7 +69,13 @@
                                     </label>
                                 </div>
                                 @csrf
-                                   @if(session()->has('error_message'))
+                        
+                                <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">sign in</button>
+                                        
+                        
+                            
+                            </form>
+                          @if(session()->has('error_message'))
                                     	<div class="sufee-alert alert with-close alert-danger alert-dismissible m-2  fade show">
 								  
 								              {{ session()->get('error_message')}}
@@ -79,12 +85,6 @@
 										</div>
 
                             @endif
-                                <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">sign in</button>
-                                        
-                        
-                            
-                            </form>
-               
                             <div class="register-link">
                                 <p>
                                     Don't you have account?

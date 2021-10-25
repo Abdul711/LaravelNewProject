@@ -19,7 +19,9 @@ $("#datepicker" ).datepicker( {  showOtherMonths: true,
     minDate: "-1Y 2M 1D", maxDate: "+1M +10D"
 });
 
+    $(".sendingBtn").click(function(event){
+        event.preventDefault();
+        alert("h");
+      });
 
-const myFunct= ()=>{
-alert();
-}
+

@@ -1,7 +1,7 @@
 @extends('admin/layouts')
 @section("container")
-@section('category_select','active')
-@section("pageTitle","Category")
+@section('product_select','active')
+@section("pageTitle","Product")
 <div class="row">
                                                  
                             <div class="col-lg-12">
