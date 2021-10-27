@@ -6,7 +6,7 @@
                                                  
                             <div class="col-lg-12">
                          
-                           <a href="{{url('admin/category/manage')}}"> <button type="button" class="btn btn-outline-primary">
+                           <a href="{{url('admin/product/manage')}}"> <button type="button" class="btn btn-outline-primary">
                                             <i class="fa fa-plus"></i>&nbsp; Add </button></a>
                                 <div class="table-responsive table--no-card m-b-30">
 

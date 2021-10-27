@@ -1,10 +1,10 @@
 @extends('Admin/layouts')
-@section('page_title','Manage Product')
+@section('pageTitle',$pageTitle)
 @section('product_select','active')
 @section('container')
 
 
-<h1 class="mb10">Manage Product</h1>
+<h1 class="mb10">{{$pageTitle}}</h1>
 
 <!--<div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
 
@@ -18,7 +18,7 @@
 
 <div class="row m-t-30">
    <div class="col-md-12">
-      <form action="" method="post" enctype="multipart/form-data">
+      <form action="{{route('product.store')}}" method="post" enctype="multipart/form-data">
          <div class="row">
             <div class="col-lg-12">
                <div class="card">
@@ -26,29 +26,34 @@
                      @csrf
                      <div class="form-group">
                         <label for="name" class="control-label mb-1"> Name</label>
-                        <input id="name" value="" name="name" type="text" class="form-control" aria-="true" aria-invalid="false" >
+                        <input id="name" value="" name="name" type="text" class="form-control" aria-="true" aria-invalid="false"  >
                       
                      </div>
                 
                      <div class="form-group">
                         <label for="image" class="control-label mb-1"> Image</label>
-                        <input id="image" name="image" type="file" class="form-control" aria-="true" aria-invalid="false">
+                        <input id="image" name="image_product" type="file" class="form-control" aria-="true" aria-invalid="false">
                    
                      </div>
+                     y
                      <div class="form-group">
                         <div class="row">
                            <div class="col-md-6">
                               <label for="category_id" class="control-label mb-1"> Category</label>
                               <select id="category_id" name="category_id" class="form-control" >
                                  <option value="">Select Categories</option>
-                             
+                                 @foreach ($categories as $category )
+                                     <option value="{{$category->id}}"> {{$category->categories_name}} </option>
+                                 @endforeach
                               </select>
                            </div>
                            <div class="col-md-6">
                               <label for="category_id" class="control-label mb-1"> Brand</label>
                               <select id="brand" name="brand" class="form-control" >
                                  <option value="">Select Brand</option>
-                        
+                                   @foreach($brands as $brand)
+                                     <option value="{{$brand->id}}"> {{$brand->brands_name}} </option>
+                                   @endforeach
                               </select>
                            </div>
                       
@@ -128,11 +133,7 @@
                                value="" >
                            </div>
                       
-                           <div class="col-md-2">
-                              <label for="mrp" class="control-label mb-1"> MRP</label>
-                              <input id="mrp" name="mrp[]" type="text" class="form-control" aria-="true" aria-invalid="false" 
-                              value="" >
-                           </div>
+                  
                            <div class="col-md-2">
                               <label for="price" class="control-label mb-1"> Price</label>
                               <input id="price" name="price[]" type="text" class="form-control" aria-="true" aria-invalid="false" 
@@ -142,25 +143,36 @@
                               <label for="size_id" class="control-label mb-1"> Size</label>
                               <select id="size_id" name="size_id[]" class="form-control">
                                  <option value="">Select</option>
-                             
+                                  @foreach ($sizes as  $size)
+                                      <option value="{{$size->id}}"> {{$size->size_name}}</option>
+                                  @endforeach
                               </select>
                            </div>
                            <div class="col-md-3">
                               <label for="color_id" class="control-label mb-1"> Color</label>
                               <select id="color_id" name="color_id[]" class="form-control">
                                  <option value="">Select</option>
+                                     @foreach ($colors as  $color)
+                                      <option value="{{$color->id}}"> {{$color->color_name}}</option>
+                                  @endforeach
                                </select>
                            </div>
                                 <div class="col-md-3">
-                              <label for="color_id" class="control-label mb-1">Tax</label>
+                              <label for="tax_id" class="control-label mb-1">Tax</label>
                               <select id="tax_id" name="tax_id[]" class="form-control">
                                  <option value="">Select</option>
+                                      @foreach ($taxes as  $color)
+                                      <option value="{{$color->id}}"> {{$color->tax_value}}</option>
+                                  @endforeach
                                </select>
                            </div>
                               <div class="col-md-3">
-                              <label for="color_id" class="control-label mb-1">Coupon</label>
+                              <label for="coupon_id" class="control-label mb-1">Coupon</label>
                               <select id="coupon_id" name="coupon_id[]" class="form-control">
                                  <option value="">Select</option>
+                                  @foreach ($coupons as  $coupon)
+                                      <option value="{{$coupon->id}}"> {{$coupon->coupon_code}}</option>
+                                  @endforeach
                                </select>
                            </div>
                            <div class="col-md-2">
@@ -193,7 +205,7 @@
          </div>
          <div>
             <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
-            Submit
+            {{$pageTitle}}
             </button>
          </div>
          <input type="hidden" name="id" value=""/>
@@ -208,7 +220,7 @@
 
        html+='<div class="col-md-2"><label for="sku" class="control-label mb-1"> SKU</label><input id="sku" name="sku[]" type="text" class="form-control" aria-="true" aria-invalid="false" ></div>'; 
 
-       html+='<div class="col-md-2"><label for="mrp" class="control-label mb-1"> MRP</label><input id="mrp" name="mrp[]" type="text" class="form-control" aria-="true" aria-invalid="false" ></div>'; 
+   
 
        html+='<div class="col-md-2"><label for="price" class="control-label mb-1"> Price</label><input id="price" name="price[]" type="text" class="form-control" aria-="true" aria-invalid="false" ></div>';
 
@@ -219,25 +231,18 @@
 
        var color_id_html=jQuery('#color_id').html(); 
        color_id_html = color_id_html.replace("selected", "");
-       html+='<div class="col-md-3"><label for="color_id" class="control-label mb-1"> Color</label><select id="color_id" name="color_id[]"
-        class="form-control" >'+color_id_html+'</select></div>';
- 
+       html+='<div class="col-md-3"><label for="color_id" class="control-label mb-1"> Color</label><select name="color_id[]" class="form-control" >'+color_id_html+'</select></div>';
        var tax_id_html=jQuery('#tax_id').html(); 
-       tax_id_html = size_id_html.replace("selected", "");
-       html+='<div class="col-md-3"><label for="size_id" class="control-label mb-1">Tax</label><select id="tax_id" name="tax_id[]" class="form-control">'+tax_id_html+'</select></div>';
-
+       tax_id_html = tax_id_html.replace("selected", "");
+  html+='<div class="col-md-3"><label for="color_id" class="control-label mb-1">Tax</label><select  name="tax_id[]" class="form-control" >'+tax_id_html+'</select></div>';
        var coupon_id_html=jQuery('#coupon_id').html(); 
-       coupon_id_html = color_id_html.replace("selected", "");
-       html+='<div class="col-md-3"><label for="color_id" class="control-label mb-1"> Coupon</label><select id="coupon_id" name="coupon_id[]" class="form-control" >'+coupon_id_html+'</select></div>';
-       html+='<div class="col-md-2"><label for="qty" class="control-label mb-1"> Qty</label><input id="qty" name="qty[]" type="text" class="form-control" aria-="true" aria-invalid="false" ></div>';
-
-    
-
+       coupon_id_html = coupon_id_html.replace("selected", "");
+  html+='<div class="col-md-3"><label for="color_id" class="control-label mb-1">Tax</label><select  name="coupon_id[]" class="form-control" >'+coupon_id_html+'</select></div>';
         html+=' <div class="col-md-2 m-4"><button type="button" class="btn btn-danger btn-lg" onclick=remove_more("'+loop_count+'")><i class="fa fa-minus"></i>&nbsp; Remove</button></div>'; 
 
        html+='</div></div></div></div>';
 
-       jQuery('#product_attr_box').append(html)
+       jQuery('#product_attr_box').append(html);
    }
    function remove_more(loop_count){
         jQuery('#product_attr_'+loop_count).remove();
