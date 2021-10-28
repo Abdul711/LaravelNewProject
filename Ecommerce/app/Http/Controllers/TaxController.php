@@ -47,8 +47,8 @@ class TaxController extends Controller
         $model=Tax::find($id);
         $status=$model->status;
       }
-      $model->tax_value =$tax_desc;
-      $model->tax_desc =$tax_value;
+      $model->tax_value =$tax_value;
+      $model->tax_desc =$tax_desc;
       $model->status =$status;
       $model->save();
       return redirect("admin/tax");

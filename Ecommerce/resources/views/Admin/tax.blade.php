@@ -15,8 +15,9 @@
                                         <thead>
                                             <tr>
                                                 <th>S.NO</th>
+                                                  <th>Tax   Description</th>
                                                 <th>Tax Value</th>
-                                                <th>Tax   Description</th>
+                                              
                                                 <th> Edit</th>
                                                 <th>Status</th>
                                                 <th>Delete</th>

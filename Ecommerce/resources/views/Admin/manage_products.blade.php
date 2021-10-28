@@ -162,7 +162,7 @@
                               <select id="tax_id" name="tax_id[]" class="form-control">
                                  <option value="">Select</option>
                                       @foreach ($taxes as  $color)
-                                      <option value="{{$color->id}}"> {{$color->tax_value}}</option>
+                                      <option value="{{$color->id}}"> {{$color->tax_desc}}</option>
                                   @endforeach
                                </select>
                            </div>

@@ -14,8 +14,9 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view("admin/product");
+    {    $result["products"]=DB::table("products")->get();
+   
+        return view("admin/product",$result);
     }
 
     /**
@@ -51,68 +52,116 @@ $result["coupons"]=DB::table("coupons")->where("coupon_sub_type","=","product")-
     public function store(Request $request)
     {
 
-        
+
         $y=  url()->previous();
         $data=$request->post();
         extract($data);
-        if($id=="" && $id<0){
-         if($request->hasFile("image_product")){
-          $ext=$request->file("image_product")->extension();
-        }else{
+        $admin_id=session()->get("ADMINID");
+        $product["product_name"]=$name;
+        $product["brand_id"]=$brand;
+        $product["categories_id"]=$category_id;
+        $product["admin_id"]=$admin_id;
+  
+    
+        $product["desc"]=$desc;
+        $product["keyword"]=$keywords;
+        $product["shortdesc"]=$short_desc;
+        $product["added_on"]=date("Y-m-d H:i:s");
+if($id==""){
+   if($request->hasFile("image_product")){
+    $image=$request->file("image_product");
+
+  $path="/public/media/product";
+  $ext=$image->extension();
+  $image_name=time().'.'.$ext;
+  $image->storeAs($path,$image_name);
+  }else{
       return redirect($y);
       }
+      $product["image"]=time().".".$ext;
+      $product["status"]="1";
+  $product_id=DB::table('products')->insertGetId($product);
 }else{
-
+    $product["image"]=time()."jpg";
+    $product["status"]="1";
+    $product_id=$id;
+         
 }
-      
-     foreach ($paid as $key => $value) {
-      echo "attributeName=". $attributeName= $sku[$key];
-      echo "price=". $price=$price[$key];
-      echo "color_id". $colorid= $color_id[$key];
-   echo    "size_id". $sizeId=$size_id[$key];
-      echo"coupon". $coupon_id=$coupon_id[$key];
-     echo   "tax". $tax_id=$tax_id[$key];
 
-        $discount="";
-            if($coupon_id!=""){
-       $coupon_data=DB::table('coupons')->where("id",'=',$coupon_id)->where('coupon_sub_type','=','product')->get();
-         
-              if($coupon_data[0]){
-             
-             $coupon_type=$coupon_data[0]->coupon_type;
-             $coupon_amount=$coupon_data[0]->coupon_amount;
-            $max_discount=$coupon_data[0]->max_discount;
-          $difference= $price-$coupon_amount;
-           
-            if($coupon_type=="fixed"){
-                if($price>$coupon_amount  && $difference>1000 ){  
-                   $discount=$difference;
-                }else{
-                    $discount=0; 
-                 }
-           }else{
-                      floor(($coupon_amount));
-           }   
-         
-  
-              }else {
-                $discount=0;
+
+     foreach ($paid as $key => $value) {
+ $attributeName= $sku[$key];
+    $price=$price[$key];
+   $colorid= $color_id[$key];
+      $sizeId=$size_id[$key];
+ $coupon_id=$coupon_id[$key];
+ $tax_id=$tax_id[$key];
+       if($colorid==""){
+        $colorid=0;
+       }
+       if($sizeId==""){
+        $sizeId=0;
+     }
+    if($tax_id==""){
+        $tax_id=0;
+    }
+        
+    $discount=0;
+              if($coupon_id!=""){
+                 $data=DB::table('coupons')->where('id','=',$coupon_id)->get();
+                  if(isset($data[0])){
+                $coupon_amount=$data[0]->coupon_amount;
+                          if($data[0]->coupon_type=="fixed"){
+                             $after_discount_price=$price-$coupon_amount;
+                                 if($after_discount_price>$price ||  $after_discount_price <0){
+                                     $discount=0;
+                                     
+                                 }else{
+                                     $discount=$coupon_amount;
+                                 }
+
+                          }else{
+                               $coupon_discount=floor(($coupon_amount/100)*$price);
+                               $after_discount_price=$price-$coupon_discount;
+                               if($after_discount_price>$price ||  $after_discount_price <0){
+                                   $discount=0;   
+                               }else{
+                                   $discount=$coupon_discount;
+                               }
+                          }
+                  
+
+
+                  }else {
+                    $discount=0;
+                  }
+              }else{
+                  $discount=0;
               }
+              $price=$price-$discount;
+              $data_tax=DB::table('taxes')->where('id','=',$tax_id)->get();
+              
+                if(isset($data_tax[0])){
+                    $tax_value=$data_tax[0]->tax_value;
+                    $tax=floor(($tax_value/100)*$price);
+
+                }else{
+             $tax=0;
+                }
           
-            }else{
-                $discount=0;
-            }
-            $price=$price-$discount;
+              $price=$price+$tax;
+ 
          $productAttribute["color_id"]=$colorid;
          $productAttribute["price"]=$price;
          $productAttribute["size_id"]=$sizeId;
          $productAttribute["attribute"]=$attributeName;
          $productAttribute["tax_id"]=$tax_id;
           $productAttribute["coupon_id"]=$coupon_id;
-         prx( $productAttribute);
+          $productAttribute["product_id"]=$product_id;
+ DB::table('product_attributes')->insert($productAttribute);
 
      }
-    prx($request->post());
+     return redirect("admins/product");
 
     }
 
