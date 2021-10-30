@@ -26,20 +26,58 @@ class ProductController extends Controller
      */
     public function create($id="")
     {
+       
+     
        if($id==""){
            $pageTitle="Add Product";
+           $categories_id="";
            $productName="";
+           $brand_id="";
+           $desc="";
+           $short_desc="";
+           $keyword="";
+           $result['productAttributes'][0]["id"]="";
+           $result['productAttributes'][0]["size_id"]="";
+           $result['productAttributes'][0]["color_id"]="";
+           $result['productAttributes'][0]["price"]="";
+           $result['productAttributes'][0]["product_id"]="";
+           $result['productAttributes'][0]["attribute"]="";
+           $result['productAttributes'][0]["tax_id"]="";
+           $result['productAttributes'][0]["coupon_id"]="";
+           $result['productAttributes'][0]["qty"]="";
        }else{
         $pageTitle="Update Product";
+        $data=DB::table('products')->where("id",'=',$id)->get();
+       /* prx($data);*/
+       $productName=$data[0]->product_name;
+      $categories_id=$data[0]->categories_id;
+      $brand_id=$data[0]->brand_id;
+      $desc=$data[0]->desc;
+      $keyword=$data[0]->keyword;
+      $short_desc=$data[0]->shortdesc;
+      $productAttrdata= DB::table('product_attributes')->where(['product_id'=>$id])->get();
+      $productAttrdata=json_decode($productAttrdata,true);
+      $result['productAttributes']=$productAttrdata;
        }
+       $result["productName"]=$productName;
+       $result["pageTitle"]=$pageTitle;
+       
+$result["id"]=$id;
+
+$result["brand_id"]=$brand_id;
+$result["categories_id"]=$categories_id;
+$result["desc"]=$desc;
+$result["short_desc"]=$short_desc;
+$result["keyword"]=$keyword;
 $result["categories"]=DB::table('categories')->get();
 $result["brands"]=DB::table('brands')->get();
 $result["colors"]=DB::table("colors")->get();
 $result["sizes"]=DB::table("sizes")->get();
 $result["taxes"]=DB::table("taxes")->get();
 $result["coupons"]=DB::table("coupons")->where("coupon_sub_type","=","product")->get();
-     $result["pageTitle"]=$pageTitle;
-    /*     prx($result);*/
+/*
+      prx($result);
+      */
         return view("admin/manage_products",$result);
     }
 
@@ -51,8 +89,9 @@ $result["coupons"]=DB::table("coupons")->where("coupon_sub_type","=","product")-
      */
     public function store(Request $request)
     {
-
-
+        /*
+        prx($request->post());
+*/
         $y=  url()->previous();
         $data=$request->post();
         extract($data);
@@ -82,9 +121,26 @@ if($id==""){
       $product["status"]="1";
   $product_id=DB::table('products')->insertGetId($product);
 }else{
-    $product["image"]=time()."jpg";
-    $product["status"]="1";
+    $product_table=DB::table('products');
+    $product_table_data=$product_table->where('id','=',$id)->get();
+
+    $product_status=$product_table_data[0]->status;
+    if($request->hasFile("image_product")){
+      $image=$request->file("image_product");
+
+        $path="/public/media/product";
+        $ext=$image->extension();
+        $image_name=time().'.'.$ext;
+        $image->storeAs($path,$image_name);
+        $product_image=$image_name;
+    }else{
+        $product_image=$product_table_data[0]->image;
+    }
+
+    $product["image"]=$product_image;
+    $product["status"]=$product_status;
     $product_id=$id;
+    DB::table('products')->where('id','=',$id)->update($product);
          
 }
 
@@ -96,15 +152,15 @@ if($id==""){
       $sizeId=$size_id[$key];
  $coupon_id=$coupon_id[$key];
  $tax_id=$tax_id[$key];
+ $pattrid=$paid[$key];
+ $qty=$qty[$key];
        if($colorid==""){
         $colorid=0;
        }
        if($sizeId==""){
         $sizeId=0;
      }
-    if($tax_id==""){
-        $tax_id=0;
-    }
+
         
     $discount=0;
               if($coupon_id!=""){
@@ -158,7 +214,13 @@ if($id==""){
          $productAttribute["tax_id"]=$tax_id;
           $productAttribute["coupon_id"]=$coupon_id;
           $productAttribute["product_id"]=$product_id;
- DB::table('product_attributes')->insert($productAttribute);
+          $productAttribute["qty"]=$qty;
+         if ($pattrid==""){
+            DB::table('product_attributes')->insert($productAttribute);
+         }else{
+            DB::table('product_attributes')->where('id','=',$pattrid)->update($productAttribute);
+         }
+
 
      }
      return redirect("admins/product");

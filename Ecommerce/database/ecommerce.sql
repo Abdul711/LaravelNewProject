@@ -231,7 +231,7 @@ CREATE TABLE `products` (
   `uses` varchar(230) DEFAULT NULL,
   `iv` varchar(230) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
+CREATE TABLE `ecommerce`.`setting` ( `id` INT NOT NULL AUTO_INCREMENT , `delivery_charge` VARCHAR(100) NOT NULL , `cart_min_amount` INT(100) NOT NULL , `delivery_time` INT NOT NULL , `min_item` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
 -- --------------------------------------------------------
 
 --
@@ -245,6 +245,7 @@ CREATE TABLE `product_attributes` (
   `price` varchar(255) DEFAULT NULL,
   `attribute` varchar(255) DEFAULT NULL,
   `product_id` int(255) DEFAULT NULL,
+  "qty" INT(255) DEFAULT Null,
   `tax_id` int(255) NOT NULL,
   `coupon_id` int(244) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

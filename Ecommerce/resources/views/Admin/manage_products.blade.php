@@ -26,7 +26,7 @@
                      @csrf
                      <div class="form-group">
                         <label for="name" class="control-label mb-1"> Name</label>
-                        <input id="name" value="" name="name" type="text" class="form-control" aria-="true" aria-invalid="false"  >
+                        <input id="name" value="{{$productName}}" name="name" type="text" class="form-control" aria-="true" aria-invalid="false"  >
                       
                      </div>
                 
@@ -35,7 +35,7 @@
                         <input id="image" name="image_product" type="file" class="form-control" aria-="true" aria-invalid="false">
                    
                      </div>
-                     y
+                     
                      <div class="form-group">
                         <div class="row">
                            <div class="col-md-6">
@@ -43,7 +43,13 @@
                               <select id="category_id" name="category_id" class="form-control" >
                                  <option value="">Select Categories</option>
                                  @foreach ($categories as $category )
-                                     <option value="{{$category->id}}"> {{$category->categories_name}} </option>
+                                @if($categories_id==$category->id)
+                                    <option value="{{$category->id}}" selected> {{$category->categories_name}} </option>
+                                    @else
+
+                                  <option value="{{$category->id}}"> {{$category->categories_name}} </option>
+                                @endif
+                                 
                                  @endforeach
                               </select>
                            </div>
@@ -52,7 +58,11 @@
                               <select id="brand" name="brand" class="form-control" >
                                  <option value="">Select Brand</option>
                                    @foreach($brands as $brand)
-                                     <option value="{{$brand->id}}"> {{$brand->brands_name}} </option>
+                                       @if($brand_id == $brand->id)
+                                     <option value="{{$brand->id}}" selected> {{$brand->brands_name}} </option>
+                                     @else
+                                      <option value="{{$brand->id}}"> {{$brand->brands_name}} </option>
+                                     @endif
                                    @endforeach
                               </select>
                            </div>
@@ -62,15 +72,16 @@
                      <div class="form-group">
                         <label for="short_desc" class="control-label mb-1"> Short Desc</label>
                         <textarea id="short_desc" name="short_desc" type="text" class="form-control" aria-="true" aria-invalid="false"
-                         ></textarea>
+                         >{{$short_desc}}</textarea>
                      </div>
                      <div class="form-group">
                         <label for="desc" class="control-label mb-1"> Desc</label>
-                        <textarea id="desc" name="desc" type="text" class="form-control" aria-="true" aria-invalid="false" ></textarea>
+                        <textarea id="desc" name="desc" type="text" class="form-control" aria-="true" aria-invalid="false" >{{$desc}}</textarea>
                      </div>
                      <div class="form-group">
                         <label for="keywords" class="control-label mb-1"> Keywords</label>
                         <textarea id="keywords" name="keywords" type="text" class="form-control" aria-="true" aria-invalid="false" >
+                        {{$keyword}}
                       </textarea>
                      </div>
             
@@ -122,7 +133,8 @@
         
             <div class="col-lg-12" id="product_attr_box">
               <h2 class="mb10 ml15">Product Attributes</h2>
-               <input id="paid" type="hidden" name="paid[]" value="">
+              @foreach($productAttributes as $productAttribute)
+               <input id="paid" type="hidden" name="paid[]" value="{{$productAttribute["id"]}}">
                <div class="card" id="product_attr_">
                   <div class="card-body">
                      <div class="form-group">
@@ -130,14 +142,14 @@
                            <div class="col-md-2">
                               <label for="sku" class="control-label mb-1"> SKU</label>
                               <input id="sku" name="sku[]" type="text" class="form-control" aria-="true" aria-invalid="false"
-                               value="" >
+                               value="{{$productAttribute["attribute"]}}" >
                            </div>
                       
                   
                            <div class="col-md-2">
                               <label for="price" class="control-label mb-1"> Price</label>
                               <input id="price" name="price[]" type="text" class="form-control" aria-="true" aria-invalid="false" 
-                              value="" >
+                              value="{{$productAttribute['price']}}" >
                            </div>
                            <div class="col-md-3">
                               <label for="size_id" class="control-label mb-1"> Size</label>
@@ -178,7 +190,7 @@
                            <div class="col-md-2">
                               <label for="qty" class="control-label mb-1"> Qty</label>
                               <input id="qty" name="qty[]" type="text" class="form-control" aria-="true" aria-invalid="false"
-                               value="" >
+                               value="{{$productAttribute['qty']}}" >
                            </div>
                         <!--   <div class="col-md-4">
                               <label for="attr_image" class="control-label mb-1"> Image</label>
@@ -200,7 +212,7 @@
                      </div>
                   </div>
                </div>
-            
+            @endforeach
             </div>
          </div>
          <div>
@@ -208,7 +220,7 @@
             {{$pageTitle}}
             </button>
          </div>
-         <input type="hidden" name="id" value=""/>
+         <input type="hidden" name="id" value="{{$id}}"/>
       </form>
    </div>
 </div>
@@ -226,8 +238,7 @@
 
        var size_id_html=jQuery('#size_id').html(); 
        size_id_html = size_id_html.replace("selected", "");
-       html+='<div class="col-md-3"><label for="size_id" class="control-label mb-1"> Size</label><select id="size_id" name="size_id[]"
-        class="form-control">'+size_id_html+'</select></div>';
+       html+='<div class="col-md-3"><label for="size_id" class="control-label mb-1"> Size</label><select id="size_id" name="size_id[]"  class="form-control">'+size_id_html+'</select></div>';
 
        var color_id_html=jQuery('#color_id').html(); 
        color_id_html = color_id_html.replace("selected", "");
@@ -237,9 +248,10 @@
   html+='<div class="col-md-3"><label for="color_id" class="control-label mb-1">Tax</label><select  name="tax_id[]" class="form-control" >'+tax_id_html+'</select></div>';
        var coupon_id_html=jQuery('#coupon_id').html(); 
        coupon_id_html = coupon_id_html.replace("selected", "");
-  html+='<div class="col-md-3"><label for="color_id" class="control-label mb-1">Tax</label><select  name="coupon_id[]" class="form-control" >'+coupon_id_html+'</select></div>';
-        html+=' <div class="col-md-2 m-4"><button type="button" class="btn btn-danger btn-lg" onclick=remove_more("'+loop_count+'")><i class="fa fa-minus"></i>&nbsp; Remove</button></div>'; 
-
+  html+='<div class="col-md-3"><label for="color_id" class="control-label mb-1">Coupon</label><select  name="coupon_id[]" class="form-control" >'+coupon_id_html+'</select></div>';
+       html+='<div class="col-md-3"><label class="control-label mb-1">Qty</label><input type="text" name="qty[]" class="form-control"> </div>';
+  html+=' <div class="col-md-2 m-4"><button type="button" class="btn btn-danger btn-lg" onclick=remove_more("'+loop_count+'")><i class="fa fa-minus"></i>&nbsp; Remove</button></div>'; 
+   
        html+='</div></div></div></div>';
 
        jQuery('#product_attr_box').append(html);
