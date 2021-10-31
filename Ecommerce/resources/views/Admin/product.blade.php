@@ -14,20 +14,24 @@
                                         <thead>
                                             <tr>
                                             <th> S.NO </th>
-                                                <th>date</th>
+                                         
 
                                                 <th>Name</th>
-                                        <th> Image</th>
+                                
+                                        <th colspan="4" class="text-center"> Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                     @foreach($products as $key => $value)
                                                <tr>
                                              <td>  {{$key+1}}</td>
-                                                <td>{{date("d-F-Y",strtotime($value->added_on))}}</td>
+                                         
                                                 <td>{{$value->product_name}}</td>
-                                                      <td><img src="{{asset('storage/media/product/'.$value->image)}}"></td>
+                                             
                                                       <td><a href="{{url('admin/product/manage/'.$value->id)}}"> Edit </a></td>
+                                                          <td><a href="{{url('admin/product/manage/'.$value->id)}}"> Active </a></td>
+                                                              <td><a href="{{url('admin/product/manage/'.$value->id)}}"> Show Detail</a></td>
+                                                                  <td><a href="{{url('admin/product/manage/'.$value->id)}}"> Delete </a></td>
                                             </tr>
                                     @endforeach
 

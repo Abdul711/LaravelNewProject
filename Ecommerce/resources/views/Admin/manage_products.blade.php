@@ -133,7 +133,7 @@
         
             <div class="col-lg-12" id="product_attr_box">
               <h2 class="mb10 ml15">Product Attributes</h2>
-              @foreach($productAttributes as $productAttribute)
+              @foreach($productAttributes as $key => $productAttribute)
                <input id="paid" type="hidden" name="paid[]" value="{{$productAttribute["id"]}}">
                <div class="card" id="product_attr_">
                   <div class="card-body">
@@ -156,7 +156,11 @@
                               <select id="size_id" name="size_id[]" class="form-control">
                                  <option value="">Select</option>
                                   @foreach ($sizes as  $size)
-                                      <option value="{{$size->id}}"> {{$size->size_name}}</option>
+                                     @if($productAttribute["size_id"]==$size->id)
+                                      <option value="{{$size->id}}" selected> {{$size->size_name}}</option>
+                                      @else
+                                           <option value="{{$size->id}}"> {{$size->size_name}}</option>
+                                      @endif
                                   @endforeach
                               </select>
                            </div>
@@ -165,7 +169,11 @@
                               <select id="color_id" name="color_id[]" class="form-control">
                                  <option value="">Select</option>
                                      @foreach ($colors as  $color)
-                                      <option value="{{$color->id}}"> {{$color->color_name}}</option>
+                                       @if($productAttribute["color_id"]==$color->id)
+                                      <option value="{{$color->id}}" selected> {{$color->color_name}}</option>
+                                      @else
+                                           <option value="{{$color->id}}"> {{$color->color_name}}</option>
+                                      @endif
                                   @endforeach
                                </select>
                            </div>
@@ -173,8 +181,12 @@
                               <label for="tax_id" class="control-label mb-1">Tax</label>
                               <select id="tax_id" name="tax_id[]" class="form-control">
                                  <option value="">Select</option>
-                                      @foreach ($taxes as  $color)
-                                      <option value="{{$color->id}}"> {{$color->tax_desc}}</option>
+                                      @foreach ($taxes as  $tax)
+                                            @if($productAttribute["tax_id"]==$tax->id)
+                                      <option value="{{$tax->id}}" selected> {{$tax->tax_desc}}</option>
+                                      @else
+                                        <option value="{{$tax->id}}"> {{$tax->tax_desc}}</option>
+                                        @endif
                                   @endforeach
                                </select>
                            </div>
@@ -183,7 +195,11 @@
                               <select id="coupon_id" name="coupon_id[]" class="form-control">
                                  <option value="">Select</option>
                                   @foreach ($coupons as  $coupon)
-                                      <option value="{{$coupon->id}}"> {{$coupon->coupon_code}}</option>
+                                       @if($productAttribute["coupon_id"]==$coupon->id)
+                                      <option value="{{$coupon->id}}" selected> {{$coupon->coupon_code}}</option>
+                                      @else
+                                               <option value="{{$coupon->id}}"> {{$coupon->coupon_code}}</option>
+                                      @endif
                                   @endforeach
                                </select>
                            </div>
@@ -204,8 +220,10 @@
                               
                                 <button type="button" class="btn btn-success btn-lg" onclick="add_more()">
                                 <i class="fa fa-plus"></i>&nbsp; Add</button>
+                    
                                    <a href=""><button type="button" class="btn btn-danger btn-lg">
                                 <i class="fa fa-minus"></i>&nbsp; Remove</button></a>
+                            {{$key}}
 
                            </div>
                         </div>

@@ -147,23 +147,29 @@ if($id==""){
 
      foreach ($paid as $key => $value) {
  $attributeName= $sku[$key];
-    $price=$price[$key];
+
    $colorid= $color_id[$key];
       $sizeId=$size_id[$key];
  $coupon_id=$coupon_id[$key];
  $tax_id=$tax_id[$key];
  $pattrid=$paid[$key];
- $qty=$qty[$key];
+   $price=0;
+   $qty=1;
        if($colorid==""){
         $colorid=0;
        }
        if($sizeId==""){
         $sizeId=0;
      }
-
+     if($tax_id==""){
+        $tax_id=0;
+     }
+     if($coupon_id==""){
+        $coupon_id=0;
+     }
         
     $discount=0;
-              if($coupon_id!=""){
+              if($coupon_id!="" && $coupon_id>0){
                  $data=DB::table('coupons')->where('id','=',$coupon_id)->get();
                   if(isset($data[0])){
                 $coupon_amount=$data[0]->coupon_amount;
@@ -195,6 +201,7 @@ if($id==""){
                   $discount=0;
               }
               $price=$price-$discount;
+              if($tax_id>0){
               $data_tax=DB::table('taxes')->where('id','=',$tax_id)->get();
               
                 if(isset($data_tax[0])){
@@ -204,7 +211,9 @@ if($id==""){
                 }else{
              $tax=0;
                 }
-          
+            }else{
+                $tax=0;
+            }
               $price=$price+$tax;
  
          $productAttribute["color_id"]=$colorid;
@@ -223,7 +232,7 @@ if($id==""){
 
 
      }
-     return redirect("admins/product");
+     return redirect("admin/product");
 
     }
 
