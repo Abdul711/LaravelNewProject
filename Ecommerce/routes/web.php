@@ -47,6 +47,7 @@ Route::get('admin/category',[CategoryController::class,"index"]);
 Route::post('admin/category/manageprocess',[CategoryController::class,"store"])->name('category.store');
 /* Category Crud Operation */
 Route::get('admin/product/manage/{id?}',[ProductController::class,"create"]);
+Route::get('admin/product/detail/{id?}/{show?}',[ProductController::class,"show"]);
 Route::get('admin/product',[ProductController::class,"index"]);
 Route::post("admin/product/manage_process",[ProductController::class,"store"])->name("product.store");
 /* Category Crud Operation */

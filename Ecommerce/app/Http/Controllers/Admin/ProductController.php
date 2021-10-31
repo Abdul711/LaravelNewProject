@@ -15,7 +15,7 @@ class ProductController extends Controller
      */
     public function index()
     {    $result["products"]=DB::table("products")->get();
-   
+
         return view("admin/product",$result);
     }
 
@@ -26,8 +26,8 @@ class ProductController extends Controller
      */
     public function create($id="")
     {
-       
-     
+
+
        if($id==""){
            $pageTitle="Add Product";
            $categories_id="";
@@ -61,7 +61,7 @@ class ProductController extends Controller
        }
        $result["productName"]=$productName;
        $result["pageTitle"]=$pageTitle;
-       
+
 $result["id"]=$id;
 
 $result["brand_id"]=$brand_id;
@@ -89,19 +89,20 @@ $result["coupons"]=DB::table("coupons")->where("coupon_sub_type","=","product")-
      */
     public function store(Request $request)
     {
-        /*
-        prx($request->post());
-*/
+    
+     
         $y=  url()->previous();
         $data=$request->post();
+        $tax=$request->post('tax_id');
         extract($data);
+
         $admin_id=session()->get("ADMINID");
         $product["product_name"]=$name;
         $product["brand_id"]=$brand;
         $product["categories_id"]=$category_id;
         $product["admin_id"]=$admin_id;
-  
-    
+
+
         $product["desc"]=$desc;
         $product["keyword"]=$keywords;
         $product["shortdesc"]=$short_desc;
@@ -140,94 +141,84 @@ if($id==""){
     $product["image"]=$product_image;
     $product["status"]=$product_status;
     $product_id=$id;
-    DB::table('products')->where('id','=',$id)->update($product);
-         
+   DB::table('products')->where('id','=',$id)->update($product);
+
 }
+
 
 
      foreach ($paid as $key => $value) {
  $attributeName= $sku[$key];
 
+
+
    $colorid= $color_id[$key];
       $sizeId=$size_id[$key];
- $coupon_id=$coupon_id[$key];
- $tax_id=$tax_id[$key];
+         if($colorid==""){
+          $colorid=0;
+         }
+         if($sizeId==""){
+             $sizeId=0;
+         }
+ $coupon_ids=$coupon_id[$key];
+  $tax_id_a=$tax_id[$key];
  $pattrid=$paid[$key];
-   $price=0;
-   $qty=1;
-       if($colorid==""){
-        $colorid=0;
-       }
-       if($sizeId==""){
-        $sizeId=0;
-     }
-     if($tax_id==""){
-        $tax_id=0;
-     }
-     if($coupon_id==""){
-        $coupon_id=0;
-     }
-        
-    $discount=0;
-              if($coupon_id!="" && $coupon_id>0){
-                 $data=DB::table('coupons')->where('id','=',$coupon_id)->get();
-                  if(isset($data[0])){
-                $coupon_amount=$data[0]->coupon_amount;
-                          if($data[0]->coupon_type=="fixed"){
-                             $after_discount_price=$price-$coupon_amount;
-                                 if($after_discount_price>$price ||  $after_discount_price <0){
-                                     $discount=0;
-                                     
-                                 }else{
-                                     $discount=$coupon_amount;
-                                 }
-
-                          }else{
-                               $coupon_discount=floor(($coupon_amount/100)*$price);
-                               $after_discount_price=$price-$coupon_discount;
-                               if($after_discount_price>$price ||  $after_discount_price <0){
-                                   $discount=0;   
-                               }else{
-                                   $discount=$coupon_discount;
-                               }
-                          }
-                  
+ $price=$prices[$key];
+    $price = (int) $price;
+    $qty= $qtys[$key];
+    $qty = (int) $qty;
+ /*echo gettype($price);*/
+ 
+  
 
 
-                  }else {
-                    $discount=0;
-                  }
+ 
+            $coupon_data=DB::table('coupons')->where("id",'=',$coupon_ids)->get();
+       $coupon_type="";
+              if(isset($coupon_data[0])){
+                $coupon_type=$coupon_data[0]->coupon_type;
+                $coupon_amount=$coupon_data[0]->coupon_amount;
+                   $coupon_amount= (int) $coupon_amount;
+                    if($coupon_type=="fixed"){
+                      $discount=$coupon_amount;
+                    }else{
+                      $discount=floor(($coupon_amount/100)*$price);
+                    }
               }else{
                   $discount=0;
               }
-              $price=$price-$discount;
-              if($tax_id>0){
-              $data_tax=DB::table('taxes')->where('id','=',$tax_id)->get();
-              
-                if(isset($data_tax[0])){
-                    $tax_value=$data_tax[0]->tax_value;
-                    $tax=floor(($tax_value/100)*$price);
+                
 
-                }else{
+
+$discount=(int) $discount;
+  gettype($discount);
+        $price=$price-$discount;
+         gettype($price);
+      $tax_data=DB::table('taxes')->where('id','=',$tax_id_a)->get();
+          if(isset($tax_data))
+           {
+              $tax_amount=$tax_data[0]->tax_value;
+                $tax=floor(($tax_amount/100)*$price);
+           }else{
              $tax=0;
-                }
-            }else{
-                $tax=0;
-            }
-              $price=$price+$tax;
- 
+           }    
+           $tax=(int) $tax;
+           $price=$price+$tax;
+           gettype($price);
          $productAttribute["color_id"]=$colorid;
          $productAttribute["price"]=$price;
          $productAttribute["size_id"]=$sizeId;
          $productAttribute["attribute"]=$attributeName;
-         $productAttribute["tax_id"]=$tax_id;
-          $productAttribute["coupon_id"]=$coupon_id;
+         $productAttribute["tax_id"]=$tax_id_a;
+          $productAttribute["coupon_id"]=$coupon_ids;
           $productAttribute["product_id"]=$product_id;
           $productAttribute["qty"]=$qty;
+ 
          if ($pattrid==""){
-            DB::table('product_attributes')->insert($productAttribute);
+         DB::table('product_attributes')->insert($productAttribute);
          }else{
-            DB::table('product_attributes')->where('id','=',$pattrid)->update($productAttribute);
+      
+          DB::table('product_attributes')->where('id','=',$pattrid)->update($productAttribute);
          }
 
 
@@ -242,9 +233,29 @@ if($id==""){
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show($id,$show=null)
     {
-        //
+       
+      
+            $result["product_details"] = DB::table('products')
+            ->leftJoin('brands', 'brands.id', '=', 'products.brand_id')
+            ->leftJoin('categories', 'categories.id', '=', 'products.categories_id')
+            ->leftJoin('admins', 'admins.id', '=', 'products.admin_id')
+            ->select("products.id as product_id","products.product_name",'products.status','products.image','products.added_on','brands.brands_name','categories.categories_name','admins.id as admin_id','admins.email',
+            'admins.mobile')
+        ->get();
+        $result["product_attribute_details"] = DB::table('product_attributes')
+        ->leftJoin('colors', 'colors.id', '=', 'product_attributes.color_id')
+        ->leftJoin('sizes', 'sizes.id', '=', 'product_attributes.size_id')
+   ->select("product_attributes.price","product_attributes.attribute","colors.color_name","sizes.size_name",'product_attributes.qty')
+        ->get();
+        if($show==0){
+            prx($result);
+        }
+    
+  return view("admin/product_detail",$result);
+     
+        echo $id;
     }
 
     /**

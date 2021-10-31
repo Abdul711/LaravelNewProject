@@ -148,7 +148,7 @@
                   
                            <div class="col-md-2">
                               <label for="price" class="control-label mb-1"> Price</label>
-                              <input id="price" name="price[]" type="text" class="form-control" aria-="true" aria-invalid="false" 
+                              <input id="price" name="prices[]" type="text" class="form-control" aria-="true" aria-invalid="false" 
                               value="{{$productAttribute['price']}}" >
                            </div>
                            <div class="col-md-3">
@@ -157,7 +157,7 @@
                                  <option value="">Select</option>
                                   @foreach ($sizes as  $size)
                                      @if($productAttribute["size_id"]==$size->id)
-                                      <option value="{{$size->id}}" selected> {{$size->size_name}}</option>
+                                      <option value="{{$size->id}}"selected> {{$size->size_name}}</option>
                                       @else
                                            <option value="{{$size->id}}"> {{$size->size_name}}</option>
                                       @endif
@@ -170,7 +170,7 @@
                                  <option value="">Select</option>
                                      @foreach ($colors as  $color)
                                        @if($productAttribute["color_id"]==$color->id)
-                                      <option value="{{$color->id}}" selected> {{$color->color_name}}</option>
+                                      <option value="{{$color->id}}"selected> {{$color->color_name}}</option>
                                       @else
                                            <option value="{{$color->id}}"> {{$color->color_name}}</option>
                                       @endif
@@ -183,7 +183,7 @@
                                  <option value="">Select</option>
                                       @foreach ($taxes as  $tax)
                                             @if($productAttribute["tax_id"]==$tax->id)
-                                      <option value="{{$tax->id}}" selected> {{$tax->tax_desc}}</option>
+                                      <option value="{{$tax->id}}"selected> {{$tax->tax_desc}}</option>
                                       @else
                                         <option value="{{$tax->id}}"> {{$tax->tax_desc}}</option>
                                         @endif
@@ -198,14 +198,14 @@
                                        @if($productAttribute["coupon_id"]==$coupon->id)
                                       <option value="{{$coupon->id}}" selected> {{$coupon->coupon_code}}</option>
                                       @else
-                                               <option value="{{$coupon->id}}"> {{$coupon->coupon_code}}</option>
+                                                    <option value="{{$coupon->id}}"> {{$coupon->coupon_code}}</option>
                                       @endif
                                   @endforeach
                                </select>
                            </div>
                            <div class="col-md-2">
                               <label for="qty" class="control-label mb-1"> Qty</label>
-                              <input id="qty" name="qty[]" type="text" class="form-control" aria-="true" aria-invalid="false"
+                              <input id="qty" name="qtys[]" type="text" class="form-control" aria-="true" aria-invalid="false"
                                value="{{$productAttribute['qty']}}" >
                            </div>
                         <!--   <div class="col-md-4">
@@ -215,16 +215,19 @@
                           
                            </div>-->
                            <div class="col-md-2">
-                              <label for="attr_image" class="control-label mb-1"> 
-                              &nbsp;&nbsp;&nbsp;</label>
-                              
-                                <button type="button" class="btn btn-success btn-lg" onclick="add_more()">
+                         
+                      
+                               @if ($key>=0 && $key<1) 
+                                    <button type="button" class="btn btn-success btn-lg m-4" onclick="add_more()">
                                 <i class="fa fa-plus"></i>&nbsp; Add</button>
-                    
-                                   <a href=""><button type="button" class="btn btn-danger btn-lg">
+                                      @else
+                                          <a href=""><button type="button" class="btn btn-danger btn-lg m-4">
                                 <i class="fa fa-minus"></i>&nbsp; Remove</button></a>
-                            {{$key}}
-
+                               @endif
+                               
+                                   
+                    
+                          
                            </div>
                         </div>
                      </div>
@@ -252,7 +255,7 @@
 
    
 
-       html+='<div class="col-md-2"><label for="price" class="control-label mb-1"> Price</label><input id="price" name="price[]" type="text" class="form-control" aria-="true" aria-invalid="false" ></div>';
+       html+='<div class="col-md-2"><label for="price" class="control-label mb-1"> Price</label><input id="price" name="prices[]" type="text" class="form-control" aria-="true" aria-invalid="false" ></div>';
 
        var size_id_html=jQuery('#size_id').html(); 
        size_id_html = size_id_html.replace("selected", "");
@@ -263,11 +266,11 @@
        html+='<div class="col-md-3"><label for="color_id" class="control-label mb-1"> Color</label><select name="color_id[]" class="form-control" >'+color_id_html+'</select></div>';
        var tax_id_html=jQuery('#tax_id').html(); 
        tax_id_html = tax_id_html.replace("selected", "");
-  html+='<div class="col-md-3"><label for="color_id" class="control-label mb-1">Tax</label><select  name="tax_id[]" class="form-control" >'+tax_id_html+'</select></div>';
+  html+='<div class="col-md-3"><label for="tax_id" class="control-label mb-1">Tax</label><select  name="tax_id[]" class="form-control" >'+tax_id_html+'</select></div>';
        var coupon_id_html=jQuery('#coupon_id').html(); 
-       coupon_id_html = coupon_id_html.replace("selected", "");
+       coupon_id_html = coupon_id_html.replace("selected", " ");
   html+='<div class="col-md-3"><label for="color_id" class="control-label mb-1">Coupon</label><select  name="coupon_id[]" class="form-control" >'+coupon_id_html+'</select></div>';
-       html+='<div class="col-md-3"><label class="control-label mb-1">Qty</label><input type="text" name="qty[]" class="form-control"> </div>';
+       html+='<div class="col-md-3"><label class="control-label mb-1">Qty</label><input type="text" name="qtys[]" class="form-control"> </div>';
   html+=' <div class="col-md-2 m-4"><button type="button" class="btn btn-danger btn-lg" onclick=remove_more("'+loop_count+'")><i class="fa fa-minus"></i>&nbsp; Remove</button></div>'; 
    
        html+='</div></div></div></div>';
