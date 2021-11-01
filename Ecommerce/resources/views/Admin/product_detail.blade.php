@@ -80,6 +80,11 @@
                                    <td>{{$value->size_name}}       </td>
                                            <td>{{$value->price}}       </td>
                                                    <td>{{$value->qty}}       </td>
+                                                      @if($value->status==1)
+                                                      <td> <a href=""> Active </a> </td>
+                                                      @else
+                                                        <td> <a href=""> Deactive </a> </td>
+                                                      @endif
                                   </tr>
                           @endforeach
 

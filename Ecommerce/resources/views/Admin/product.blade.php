@@ -29,7 +29,13 @@
                                                 <td>{{$value->product_name}}</td>
                                              
                                                       <td><a href="{{url('admin/product/manage/'.$value->id)}}"> Edit </a></td>
+
+
+                                                          @if($value->status==1)
                                                           <td><a href="{{url('admin/product/status/'.$value->id)}}"> Active </a></td>
+                                                          @else
+                                                                <td><a href="{{url('admin/product/status/'.$value->id)}}"> Deactive </a></td>
+                                                            @endif
                                                               <td><a href="{{url('admin/product/detail/'.$value->id.'/1')}}"> Show Detail</a></td>
                                                   
                                             </tr>
