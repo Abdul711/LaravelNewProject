@@ -31,7 +31,7 @@
                                                       <td><a href="{{url('admin/product/manage/'.$value->id)}}"> Edit </a></td>
                                                           <td><a href="{{url('admin/product/status/'.$value->id)}}"> Active </a></td>
                                                               <td><a href="{{url('admin/product/detail/'.$value->id.'/1')}}"> Show Detail</a></td>
-                                                                  <td><a href="{{url('admin/product/delete/'.$value->id)}}"> Delete </a></td>
+                                                  
                                             </tr>
                                     @endforeach
 

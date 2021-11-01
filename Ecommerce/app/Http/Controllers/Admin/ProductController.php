@@ -236,6 +236,10 @@ $discount=(int) $discount;
     public function show($id,$show=null)
     {
        
+       /* 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 
+       
+           "     git push https://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@github.com/Abdul711/LaravelNewProject.git"
+       */
       
             $result["product_details"] = DB::table('products')
             ->leftJoin('brands', 'brands.id', '=', 'products.brand_id')
@@ -276,9 +280,9 @@ $discount=(int) $discount;
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update_status($id)
     {
-        //
+        echo $id;
     }
 
     /**

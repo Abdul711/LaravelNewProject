@@ -7,7 +7,7 @@
 
 
 <div class="row">
-                                                 
+
                             <div class="col-lg-12">
                  <h1 class="text-center"> {{$product_details[0]->product_name}}  </h1>
           <div class="au-card au-card--bg-blue au-card-top-countries m-b-30">
@@ -15,7 +15,7 @@
                                         <div class="table-responsive">
                                             <table class="table table-top-countries">
                                                 <tbody>
-                                         
+
                                                     <tr>
                                                         <td>Brand</td>
                                  <td>  {{$product_details[0]->brands_name}} </td>
@@ -33,15 +33,15 @@
                                                     <td> Category Name</td>
                                                     <td>  {{$product_details[0]->categories_name}} </td>
                                                     </tr>
-                                                    <tr> 
-                                                    <td> Vendor Email </td> 
+                                                    <tr>
+                                                    <td> Vendor Email </td>
                                       <td>  {{$product_details[0]->email}} </td>
-                                                    </tr> 
+                                                    </tr>
                                                     <tr>
                                                     <td> Vendor Mobile </td>
                                                     <td>  {{$product_details[0]->mobile}} </td>
                                                     </tr>
-                                               <tr>   
+                                               <tr>
                                                 <td> <img src="  {{asset('storage/media/product/'.$product_details[0]->image)}}" ></td>
                                                    </tr>
                                                 </tbody>
@@ -52,11 +52,14 @@
 
                                 </div>
                             </div>
+                            
+
+                           
 <div class="row">
 
                             <div class="col-lg-12">
 
-                          
+
                                 <div class="table-responsive table--no-card m-b-30">
 
                                     <table class="table table-borderless table-striped table-earning">
@@ -81,9 +84,9 @@
                           @endforeach
 
 
-
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                             @endsection
+                   
