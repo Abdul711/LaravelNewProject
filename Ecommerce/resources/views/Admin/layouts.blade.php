@@ -194,6 +194,9 @@
               <li class="@yield('size_select')">
                                     <a href="{{url('admin/size')}}">Size</a>
                                 </li>
+                                <li class="@yield('setting_select')">
+                                    <a href="{{url('admin/setting')}}">Setting</a>
+                                </li>
                                  @endif
                                 @endif
                           

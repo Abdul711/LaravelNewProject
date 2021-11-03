@@ -119,5 +119,56 @@ class AdminController extends Controller
      }
      public function dashboard(){
 return view("admin/index");
+
    }
+ function  websetting(){
+         $data=DB::table('setting')->get();
+            if(isset($data[0])){
+             $result['delivery_charge']=$data[0]->delivery_charge;
+             $result['cart_min_amount']=$data[0]->cart_min_amount;
+             $result['delivery_time']=$data[0]->delivery_time;
+             $result['web_status']=$data[0]->web_status;
+             $result['min_item']=$data[0]->min_item;
+             $result['referral_amount']=$data[0]->referral_amount;
+             $result['welcome_amount']=$data[0]->welcome_amount;
+             $result['amount_delivery']=$data[0]->amount_delivery;
+            }else{
+               $result['delivery_charge']="";
+               $result['cart_min_amount']="";
+                 $result['delivery_time']="";
+                 $result['web_status']="";
+               $result['min_item']="";
+                 $result['referral_amount']="";
+                 $result['welcome_amount']="";
+                 $result['amount_delivery']="";
+            }
+        
+    
+  $result["pageTitle"]="Manage Setting";
+      return view("admin/manage_setting",$result);
+   }
+   function  websettingmanage(Request $req){
+ 
+
+     $result=$req->post();
+ 
+     unset($result["_token"]);
+    
+
+      
+             $data_sett=DB::table('setting')->get();
+                if($data_sett[0]){
+                  $data_set=DB::table('setting')->first();
+                  $id=$data_set->id;
+                  $result["id"]=$id;
+                  DB::table('setting')->where('id','=',$id)->update($result);
+                }else{
+
+                   DB::table('setting')->insert($result);
+                   $y=url()->previous();
+             
+                }
+                return redirect("admin/setting");
+   
+       }
 }

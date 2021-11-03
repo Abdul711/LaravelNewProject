@@ -179,7 +179,8 @@ CREATE TABLE `customers` (
   `password` varchar(255) NOT NULL,
   `verified` varchar(255) NOT NULL,
   `block` varchar(255) NOT NULL,
-  `fail` varchar(255) NOT NULL
+  `fail` varchar(255) NOT NULL,
+  `referral_id` varchar(255) DEFAULT NULL 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -324,7 +325,9 @@ CREATE TABLE `setting` (
   `cart_min_amount` int(100) NOT NULL,
   `delivery_time` int(100) NOT NULL,
   `web_status` varchar(119) DEFAULT NULL,
-  `min_item` int(100) NOT NULL,
+  `min_item` varchar(100) DEFAULT NULL,
+  `coupon_expiry_time` varchar(255)  DEFAULT null,
+  "amount_delivery" varchar(255) DEFAULT Null,
   `referral_amount` varchar(119) DEFAULT NULL,
   `welcome_amount` varchar(119) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

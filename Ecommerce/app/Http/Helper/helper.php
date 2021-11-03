@@ -5,6 +5,21 @@ function prx($arr){
     echo "</pre>";
     die();
 }
+function AdvancxTime($timerequired,$unit){
+  $t=time();
+      if($unit=="hr"){
+        $t=time()+60*60*$timerequired;
+
+      }else{
+        if($unit=="day"){
+          $t=time()+60*60*24*$timerequired;
+        }else{
+        $t=time()+60*$timerequired;
+        }
+      }
+$data=(date("d-F-Y H:i a",$t));
+return $data;
+}
 function facebook_time_ago($timestamp)  
 {  
      $time_ago = strtotime($timestamp);  
@@ -86,8 +101,10 @@ function facebook_time_ago($timestamp)
           {  
       return "$years years ago";  
     }  
-  }  
-}  
+     }
+    }  
+
+
 
 
 
