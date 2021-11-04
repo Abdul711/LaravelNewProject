@@ -147,6 +147,88 @@ return view("admin/index");
   $result["pageTitle"]="Manage Setting";
       return view("admin/manage_setting",$result);
    }
+   function banner(){
+      $data=DB::table('banner')->get();
+      $result["banners"]=$data;
+
+        return view("admin/banner",$result);
+   }
+function   manage_banner($id=null){ 
+     if($id==null){
+        $pageTitle="Add Banner";
+        $image="";
+        $linktext="";
+        $bannerText="";
+     }else{
+      $pageTitle="Update Banner";
+      $image=time().".png";
+      $ti=time();
+      $today=date("d-m-Y H:i");
+     $t= strtotime("+1 days");
+     $data=DB::table('banner')->where('id','=',$id)->get();
+     $image=$data[0]->image;
+   $linktext=  date('d-F-Y h:i a', strtotime(' +1 month 29 day 2 hours 15 minutes', strtotime($today)));
+ $bannerText="shop";
+     }
+      $result["pageTitle"]=$pageTitle;
+      $result["id"]=$id;
+      $result["image"]=$image;
+      $result["LinkText"]=$data[0]->linktext;
+      $result["bannerText"]=$data[0]->text;
+       return view("admin/manage_banner",$result);
+      prx($result);
+   }
+ function  banner_manage(Request $req){
+   $id=$req->post("id");
+   $linktext=$req->post("LinkText");
+   $bannerText=$req->post("bannerText");
+
+        if($id==""){
+         
+         if($req->hasfile("bannerImage")){
+         $image=$req->file("bannerImage");
+         $ext=$image->extension();
+        $image_name=time().".".$ext;
+        $path="/public/media/banner";
+          $image->storeAs($path,$image_name);
+          DB::table('banner')->insert([
+             "image"=>$image_name,
+            "text"=>$bannerText,
+            "linktext"=>$linktext,
+         "added_on"=>date("Y-m-d H:i:s")
+          ]);
+         }else{
+            return redirect(url()->previous());
+         }
+        }else{
+         if($req->hasfile("bannerImage")){
+            $image=$req->file("bannerImage");
+            $ext=$image->extension();
+           $image_name=time().".".$ext;
+           $path="/public/media/banner";
+             $image->storeAs($path,$image_name);
+            }else{
+         $data=DB::table('banner')->where('id','=',$id)->get();
+               $image_name-$data[0]->image;
+            }
+            DB::table('banner')->where('id','=',$id)->update([
+               "image"=>$image_name,
+              "text"=>$bannerText,
+              "linktext"=>$linktext,
+           "added_on"=>date("Y-m-d H:i:s")
+            ]);
+        }
+
+       return redirect("admin/banner");
+
+
+
+      prx($req->post());
+
+         
+
+
+   }
    function  websettingmanage(Request $req){
  
 

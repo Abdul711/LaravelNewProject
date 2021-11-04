@@ -215,9 +215,12 @@ $discount=(int) $discount;
           $productAttribute["qty"]=$qty;
  
          if ($pattrid==""){
+            $productAttribute["status"]=1;
          DB::table('product_attributes')->insert($productAttribute);
          }else{
-      
+            $dataattr=DB::table('product_attributes')-where("id,'=",$pattrid)->get();
+           $status=$dataattr[0]->status;
+           $productAttribute["status"]=$status;
           DB::table('product_attributes')->where('id','=',$pattrid)->update($productAttribute);
          }
 

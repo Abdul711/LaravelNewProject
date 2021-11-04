@@ -329,9 +329,35 @@ CREATE TABLE `setting` (
   `coupon_expiry_time` varchar(255)  DEFAULT null,
   "amount_delivery" varchar(255) DEFAULT Null,
   `referral_amount` varchar(119) DEFAULT NULL,
-  `welcome_amount` varchar(119) DEFAULT NULL
+  `welcome_amount` varchar(119) DEFAULT NULL,
+  `pointexpiry` varchar(255) NOT Null
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE TABLE `userpoint` (
+  `id` int(11) NOT NULL,
+  `point` varchar(100) NOT NULL,
+  `userid` int(100) NOT NULL,
+  `expiry_date` varchar(100) NOT NULL,
+ `added_on` datetime DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `rating` (
+  `id` int(11) NOT NULL,
+  `userid` varchar(100) NOT NULL,
+  `productid` int(100) NOT NULL,
+  `riderid` varchar(100) DEFAULT NULL,
+  `orderid` varchar(100) DEFAULT NULL,
+    `rating` varchar(100) DEFAULT NULL,
+      `type` varchar(100) DEFAULT NULL,
+ `added_on` datetime DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `banner` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `image` varchar(100) NOT NULL,
+  `text` varchar(100) NOT NULL,
+`linktext` varchar(100) NOT NULL,
+`status` varchar(100) NOT NULL,
+ `added_on` datetime DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 --
 -- Dumping data for table `setting`
 --

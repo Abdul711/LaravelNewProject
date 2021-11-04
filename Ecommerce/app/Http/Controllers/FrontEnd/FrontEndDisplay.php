@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 class FrontEndDisplay extends Controller
 {
    public function index(){
+
+
+    die();
        return view ("FrontEnd/index");
    }
 }
