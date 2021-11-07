@@ -22,7 +22,7 @@ class AdminController extends Controller
      if(!preg_match_all($validEmail,$email)){
       session()->flash("error_message","Invalid Email You Entered");
       return    redirect("admin");
-     }  
+     }
        $data=DB::table("admins")->where("email","=",$email)->get();
          if(isset($data[0])){
             if($data[0]->role!=0 && $data[0]->verified==0){
@@ -47,7 +47,7 @@ class AdminController extends Controller
             session()->flash("error_message"," Email $email is Not Register");
             return    redirect("admin");
          }
-   
+
 
 
    }
@@ -56,7 +56,7 @@ class AdminController extends Controller
         if(session()->has("ADMIN_LOGIN")){
            return redirect("admin/dashboard");
         }
-  return view("admin/login");   
+  return view("admin/login");
      }
       public function signup()
      {
@@ -64,7 +64,7 @@ class AdminController extends Controller
      }
      public function forgot()
      {
-         
+
         return view('admin/forgot');
      }
      public function register(Request $req){
@@ -72,15 +72,15 @@ class AdminController extends Controller
       $agree=$req->post("aggree");
       $email=$req->post("email");
       $post=$req->post("post");
-  
+
       $username=$req->post("username");
       $password=$req->post("password");
    $validator = Validator::make($req->all(), [
       'username' => 'required|min:5|max:55|min:5|alpha',
- 
+
    "mobile"=>"required",
    "password"=>"required",
-          
+
             "email"=>"required|email|unique:admins,email,032",
    "post"=>"required"
   ],['username.required'=>"User Name Must Be Filled Out","username.alpha"=>"Username Must Be Alphabatic"]);
@@ -90,7 +90,7 @@ class AdminController extends Controller
                   ->withErrors($validator)
                   ->withInput();
   }else{
-  
+
 
      if(!isset($agree)){
         session()->flash("agreecondition","Must Agree With Temm And condition");
@@ -102,7 +102,7 @@ class AdminController extends Controller
            $role=2;
         }
 
-       
+
         $de= DB::table("admins")->insert([
            "status"=>1,
            "email"=>$email,
@@ -142,8 +142,8 @@ return view("admin/index");
                  $result['welcome_amount']="";
                  $result['amount_delivery']="";
             }
-        
-    
+
+
   $result["pageTitle"]="Manage Setting";
       return view("admin/manage_setting",$result);
    }
@@ -153,7 +153,7 @@ return view("admin/index");
 
         return view("admin/banner",$result);
    }
-function   manage_banner($id=null){ 
+function   manage_banner($id=null){
      if($id==null){
         $pageTitle="Add Banner";
         $image="";
@@ -169,12 +169,16 @@ function   manage_banner($id=null){
      $image=$data[0]->image;
    $linktext=  date('d-F-Y h:i a', strtotime(' +1 month 29 day 2 hours 15 minutes', strtotime($today)));
  $bannerText="shop";
+
+ $linktext=$data[0]->linktext;;
+
+ $bannerText=$data[0]->text;
      }
       $result["pageTitle"]=$pageTitle;
       $result["id"]=$id;
       $result["image"]=$image;
-      $result["LinkText"]=$data[0]->linktext;
-      $result["bannerText"]=$data[0]->text;
+      $result["LinkText"]=$linktext;
+      $result["bannerText"]=$bannerText;
        return view("admin/manage_banner",$result);
       prx($result);
    }
@@ -184,7 +188,7 @@ function   manage_banner($id=null){
    $bannerText=$req->post("bannerText");
 
         if($id==""){
-         
+
          if($req->hasfile("bannerImage")){
          $image=$req->file("bannerImage");
          $ext=$image->extension();
@@ -225,19 +229,19 @@ function   manage_banner($id=null){
 
       prx($req->post());
 
-         
+
 
 
    }
    function  websettingmanage(Request $req){
- 
+
 
      $result=$req->post();
- 
-     unset($result["_token"]);
-    
 
-      
+     unset($result["_token"]);
+
+
+
              $data_sett=DB::table('setting')->get();
                 if($data_sett[0]){
                   $data_set=DB::table('setting')->first();
@@ -248,9 +252,9 @@ function   manage_banner($id=null){
 
                    DB::table('setting')->insert($result);
                    $y=url()->previous();
-             
+
                 }
                 return redirect("admin/setting");
-   
+
        }
 }
