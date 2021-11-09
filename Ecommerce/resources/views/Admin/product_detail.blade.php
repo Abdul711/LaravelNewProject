@@ -70,6 +70,7 @@
                                                 <th> Size </th>
                                                 <th> Price </th>
                                                    <th> Qty </th>
+                                                       <th> Active </th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -81,9 +82,9 @@
                                            <td>{{$value->price}}       </td>
                                                    <td>{{$value->qty}}       </td>
                                                       @if($value->status==1)
-                                                      <td> <a href=""> Active </a> </td>
+                                                      <td> <a href="{{url('admin/product/product_attr_detail/status/'.$value->id)}}"> Active </a> </td>
                                                       @else
-                                                        <td> <a href=""> Deactive </a> </td>
+                                                        <td> <a href="{{url('admin/product/product_attr_detail/status/'.$value->id)}}"> Deactive </a> </td>
                                                       @endif
                                   </tr>
                           @endforeach

@@ -180,7 +180,7 @@ CREATE TABLE `customers` (
   `verified` varchar(255) NOT NULL,
   `block` varchar(255) NOT NULL,
   `fail` varchar(255) NOT NULL,
-  `referral_id` varchar(255) DEFAULT NULL 
+  `referral_id` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -371,6 +371,8 @@ INSERT INTO `setting` (`id`, `delivery_charge`, `cart_min_amount`, `delivery_tim
 -- Table structure for table `sizes`
 --
 
+
+ALTER TABLE `carts` ADD `ip_add` VARCHAR(119) NULL DEFAULT NULL AFTER `added_on`;
 CREATE TABLE `sizes` (
   `id` int(11) NOT NULL,
   `size_name` varchar(255) NOT NULL,

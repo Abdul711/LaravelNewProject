@@ -10,13 +10,21 @@ class FrontEndDisplay extends Controller
        $bannerdata=DB::table("banner")->where('status','=',1)->get();
        $categorydata=DB::table('categories')->where('status','=',1)->get();
           foreach ($categorydata as $key => $value) {
-              $result["categories_product"][$value->id]="";
+              $result["categories_product"][$value->id]=DB::table("products")->where("categories_id",'=',$value->id)->get();
+                foreach ($result["categories_product"][$value->id] as $key => $value2) {
+                    $result["categories_product_attr"][$value2->id]=DB::table("product_attributes")
+                    ->leftJoin('sizes','sizes.id','=','product_attributes.size_id')
+                    ->leftJoin('colors','colors.id','=','product_attributes.color_id')
+                   -> where("product_id",'=',$value2->id)->get();
+               }  
+                   
           }
-       $result["banmers"]=$bannerdata;
+       $result["banners"]=$bannerdata;
        $result["categories"]=$categorydata;
-      prx($result);
+       echo "<pre>";
+    print_r($result);
+    echo "</pre>";
 
-    die();
-       return view ("FrontEnd/index");
+       return view ("FrontEnd/index2",$result);
    }
 }

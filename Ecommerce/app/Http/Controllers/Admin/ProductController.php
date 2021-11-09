@@ -218,7 +218,7 @@ $discount=(int) $discount;
             $productAttribute["status"]=1;
          DB::table('product_attributes')->insert($productAttribute);
          }else{
-            $dataattr=DB::table('product_attributes')-where("id,'=",$pattrid)->get();
+            $dataattr=DB::table('product_attributes')->where("id","=",$pattrid)->get();
            $status=$dataattr[0]->status;
            $productAttribute["status"]=$status;
           DB::table('product_attributes')->where('id','=',$pattrid)->update($productAttribute);
@@ -248,14 +248,18 @@ $discount=(int) $discount;
             ->leftJoin('brands', 'brands.id', '=', 'products.brand_id')
             ->leftJoin('categories', 'categories.id', '=', 'products.categories_id')
             ->leftJoin('admins', 'admins.id', '=', 'products.admin_id')
-            ->select("products.id as product_id","products.product_name",'products.status','products.image','products.added_on','brands.brands_name','categories.categories_name','admins.id as admin_id','admins.email',
-            'admins.mobile')
-        ->get();
+            ->select("products.product_name"
+            ,'products.status','products.image','products.added_on','brands.brands_name','categories.categories_name','admins.id as admin_id','admins.email',
+            'admins.mobile')->get();
+  
         $result["product_attribute_details"] = DB::table('product_attributes')
         ->leftJoin('colors', 'colors.id', '=', 'product_attributes.color_id')
         ->leftJoin('sizes', 'sizes.id', '=', 'product_attributes.size_id')
-   ->select("product_attributes.price","product_attributes.attribute","colors.color_name","sizes.size_name",'product_attributes.qty','product_attributes.status')
-        ->get();
+        ->leftJoin('products', 'products.id', '=', 'product_attributes.product_id')
+        ->select("sizes.size_name","colors.color_name","product_attributes.qty","product_attributes.price","product_attributes.status","product_attributes.id")
+
+        ->where('products.id','=',$id)->get();
+      
         if($show==0){
             prx($result);
         }
@@ -297,6 +301,22 @@ $discount=(int) $discount;
              }
              $data_table->update(["status"=>$newStatus]);
          return redirect("admin/product");
+    }
+    public function update_sta($id)
+    {
+        
+      $data_table=DB::table('product_attributes');
+         $data=$data_table->where("id",'=',$id)->get();
+             $status=$data[0]->status;
+             if($status==0){
+                 $newStatus=1;
+
+             }else{
+                $newStatus=0;
+             }
+             $data_table->update(["status"=>$newStatus]);
+             $y=url()->previous();
+         return redirect($y);
     }
 
     /**
