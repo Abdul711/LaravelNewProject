@@ -172,36 +172,13 @@ if($id==""){
   
 
 
- 
-            $coupon_data=DB::table('coupons')->where("id",'=',$coupon_ids)->get();
-       $coupon_type="";
-              if(isset($coupon_data[0])){
-                $coupon_type=$coupon_data[0]->coupon_type;
-                $coupon_amount=$coupon_data[0]->coupon_amount;
-                   $coupon_amount= (int) $coupon_amount;
-                    if($coupon_type=="fixed"){
-                      $discount=$coupon_amount;
-                    }else{
-                      $discount=floor(($coupon_amount/100)*$price);
-                    }
-              }else{
-                  $discount=0;
-              }
+ $discount=0;
+ $discount=(int) $discount;
                 
 
 
-$discount=(int) $discount;
-  gettype($discount);
-        $price=$price-$discount;
-         gettype($price);
-      $tax_data=DB::table('taxes')->where('id','=',$tax_id_a)->get();
-          if(isset($tax_data))
-           {
-              $tax_amount=$tax_data[0]->tax_value;
-                $tax=floor(($tax_amount/100)*$price);
-           }else{
-             $tax=0;
-           }    
+         $tax=0;
+
            $tax=(int) $tax;
            $price=$price+$tax;
            gettype($price);
@@ -250,7 +227,7 @@ $discount=(int) $discount;
             ->leftJoin('admins', 'admins.id', '=', 'products.admin_id')
             ->select("products.product_name"
             ,'products.status','products.image','products.added_on','brands.brands_name','categories.categories_name','admins.id as admin_id','admins.email',
-            'admins.mobile')->get();
+            'admins.mobile')->where('products.id','=',$id)->get();
   
         $result["product_attribute_details"] = DB::table('product_attributes')
         ->leftJoin('colors', 'colors.id', '=', 'product_attributes.color_id')

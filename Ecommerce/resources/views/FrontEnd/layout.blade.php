@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+
+<html>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -62,12 +62,12 @@
                   <div class="aa-language">
                     <div class="dropdown">
                       <a class="btn dropdown-toggle" href="#" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        <img src="img/flag/english.jpg" alt="english flag">ENGLISH
-                        <span class="caret"></span>
+                <!--        <img src="img/flag/english.jpg" alt="english flag">ENGLISH
+                        <span class="caret"></span>-->
                       </a>
                       <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li><a href="#"><img src="img/flag/french.jpg" alt="">FRENCH</a></li>
-                        <li><a href="#"><img src="img/flag/english.jpg" alt="">ENGLISH</a></li>
+                      <!--  <li><a href="#"><img src="img/flag/french.jpg" alt="">FRENCH</a></li>
+                        <li><a href="#"><img src="img/flag/english.jpg" alt="">ENGLISH</a></li>-->
                       </ul>
                     </div>
                   </div>
@@ -137,7 +137,7 @@
                   <div class="aa-cartbox-summary">
                     <ul>
                       <li>
-                        <a class="aa-cartbox-img" href="#"><img src="img/woman-small-2.jpg" alt="img"></a>
+                       <!-- <a class="aa-cartbox-img" href="#"><img src="img/woman-small-2.jpg" alt="img"></a>
                         <div class="aa-cartbox-info">
                           <h4><a href="#">Product Name</a></h4>
                           <p>1 x $250</p>
@@ -159,7 +159,7 @@
                         <span class="aa-cartbox-total-price">
                           $500
                         </span>
-                      </li>
+                      </li>-->
                     </ul>
                     <a class="aa-cartbox-checkout aa-primary-btn" href="#">Checkout</a>
                   </div>
@@ -431,7 +431,10 @@
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div>
-
+           <script>
+           const ProductImage="{{asset('storage/media/product/')}}";
+           const WebsiteLink="{{url('')}}";
+           </script>
       <!-- jQuery library -->
       <script src="{{asset('FrontStyle/js/jquery.js')}}"></script>
       <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -441,8 +444,8 @@
       <!-- SmartMenus jQuery Bootstrap Addon -->
       <script type="text/javascript" src="{{asset('FrontStyle/js/jquery.smartmenus.bootstrap.js')}}"></script>
       <!-- To Slider JS -->
-      <script src="{{asset('FrontStyle/js/sequence.js')}}"></script>
-      <script src="{{asset('FrontStyle/js/sequence-theme.modern-slide-in.js')}}"></script>
+
+     
       <!-- Product view slider -->
       <script type="text/javascript" src="{{asset('FrontStyle/js/jquery.simpleGallery.js')}}"></script>
       <script type="text/javascript" src="{{asset('FrontStyle/js/jquery.simpleLens.js')}}"></script>
@@ -452,6 +455,7 @@
       <script type="text/javascript" src="{{asset('FrontStyle/js/nouislider.js')}}"></script>
       <!-- Custom js -->
       <script src="{{asset('FrontStyle/js/custom.js')}}"></script>
+         <script src="{{asset('FrontStyle/js/main.js')}}"></script>
 
       </body>
     </html>

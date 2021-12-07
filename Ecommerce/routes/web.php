@@ -119,6 +119,6 @@ Route::get('admin/logout', function () {
 Route::get('admin/users/{id}', function ($id) {
     
    });
-
+   Route::post("/add_to_cart",[FrontEndDisplay::class,'add_to_cart']);
 
     });

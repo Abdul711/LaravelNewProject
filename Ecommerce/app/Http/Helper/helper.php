@@ -104,8 +104,59 @@ function facebook_time_ago($timestamp)
      }
     }  
 
+       function fieldById($id,$table_name){
+         $result=DB::table($table_name)->where("id","=",$id)->get();
+         return $result;
+       }
+       function get_client_ip() {
+        $ipaddress = '';
+        if (getenv('HTTP_CLIENT_IP'))
+            $ipaddress = getenv('HTTP_CLIENT_IP');
+        else if(getenv('HTTP_X_FORWARDED_FOR'))
+            $ipaddress = getenv('HTTP_X_FORWARDED_FOR');
+        else if(getenv('HTTP_X_FORWARDED'))
+            $ipaddress = getenv('HTTP_X_FORWARDED');
+        else if(getenv('HTTP_FORWARDED_FOR'))
+            $ipaddress = getenv('HTTP_FORWARDED_FOR');
+        else if(getenv('HTTP_FORWARDED'))
+           $ipaddress = getenv('HTTP_FORWARDED');
+        else if(getenv('REMOTE_ADDR'))
+            $ipaddress = getenv('REMOTE_ADDR');
+        else
+            $ipaddress = '192.168.1.100';
+        return $ipaddress;
+    }
+    function priceproduct($attr_id){
+    $attr_data=DB::table('product_attributes')->where("id",'=',$attr_id)->get();
+    $price=$attr_data[0]->price;
+    $tax_id=$attr_data[0]->tax_id;
+    $coupon_id=$attr_data[0]->coupon_id;
+    $tax_data=DB::table('taxes')->where("id",'=',$tax_id)->where('status','=',1)->get();
+    $coupon_data=DB::table('coupons')->where("id",'=',$coupon_id)->where('status','=',1)->get();
+              $discount=0;
+              $tax=0;
+              if(isset($coupon_data[0])){
+            $coupon_amount=$coupon_data[0]->coupon_amount;
+            $coupon_type=$coupon_data[0]->coupon_type;
+               if($coupon_type=="fixed"){
+                $discount=$coupon_amount;
+               }else{
+                   $discount=floor(($coupon_amount/100)*$price);
 
+               }
+              }else{
+                $discount=0;
 
-
+              }
+              $pricedis=$price-$discount;
+              if(isset($tax_data[0])){
+               $tax_value= $tax_data[0]->tax_value;
+                 $tax=floor(($tax_value/100)*$pricedis);
+              }else{
+                $tax=0;
+              }
+              $finalprice=$pricedis+$tax;
+     return $finalprice;
+    }
 
 ?>

@@ -399,7 +399,9 @@
             <!-- END MAIN CONTENT-->
             <!-- END PAGE CONTAINER-->
 
-        </div>
+        </div><script>
+
+</script>
 @endsection
     </div>
 
