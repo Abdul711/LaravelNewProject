@@ -105,7 +105,7 @@ Route::post("admin/product/manage_process",[ProductController::class,"store"])->
 /* Category Crud Operation */
 Route::get('admin/order/manage/{id?}',[OrderController::class,"create"]);
 
-
+Route::get("/cart",[FrontEndDisplay::class,"viewcart"]);
 
 Route::get('admin/logout', function () {
        if(session()->has("ADMINID")){

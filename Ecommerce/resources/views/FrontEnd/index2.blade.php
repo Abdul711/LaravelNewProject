@@ -7,8 +7,8 @@
 
 
   <!-- Start slider -->
-  @extends("FrontEnd/layout")
-  @section("container")
+@extends('FrontEnd/layout')
+@section('container')
   <!--<section id="aa-slider">
     <div class="aa-slider-area">
       <div id="sequence" class="seq">
